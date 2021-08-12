@@ -9,7 +9,7 @@ class tile {
 		this.tail = false;
 	}
 
-	void generate(contentGiven) {
+	generate(contentGiven) {
 		//if no content given, generate random capital letter
 		//else assign given to content
 		if(contentGiven == undefined) {

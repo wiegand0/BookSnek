@@ -5,3 +5,21 @@
 	font-size: 24pt;
 	background-color:  pink;
 }
+
+.tile {
+	background-color:  pink;
+	width:  1em;
+	height:  1em;
+}
+
+#gameContainer {
+	display:  grid;
+	grid-gap:  5px;
+	grid-template-columns: repeat(25, 15px);
+	text-align:  center;
+	padding: auto;
+
+	 position: absolute;
+    top: 10em;
+    left: 45em;
+}

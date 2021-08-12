@@ -1,6 +1,6 @@
 //board class contains all the contents of the game, player, score, environment etc.
 
-const boardWidth = 25, boardHeight = 10, boardSize = boardWidth * boardHeight;
+const boardWidth = 25, boardHeight = 20, boardSize = boardWidth * boardHeight;
 
 class board {
 	
@@ -13,7 +13,7 @@ class board {
 	//game state
 		this.gameOver = false;
 	//tile array representation of board
-		this.boardActual = Array(tile).fill(boardSize);
+		this.boardActual = Array(boardSize).fill(new tile());
 	//the player
 		this.player = worm;
 	}
@@ -35,6 +35,7 @@ class board {
 		boardActual[newTile].generate(newTileContent);
 		/////END OF CONTENT TO BE MOVED/////
 
+		player.updateBoardPos(boardActual);
 
 		//if they player has eaten a letter, add their score
 		//if they ate themselves, game over
