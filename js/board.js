@@ -2,23 +2,23 @@
 
 const boardWidth = 25, boardHeight = 20, boardSize = boardWidth * boardHeight;
 
-class board {
-	
-	constructor() {
-		this.boardHeight = boardHeight;
-		this.boardWidth = boardWidth;
-		this.boardSize = boardSize;
+//can't access global variable inside module??
+var board = (function() {
+	var boardHeight = 20;
+	var boardWidth = 25;
+	var boardSize = boardWidth * boardHeight;
 	//actual score representation
-		this.score = 0;
+	var score = 0;
 	//game state
-		this.gameOver = false;
+	var gameOver = false;
 	//tile array representation of board
-		this.boardActual = Array(boardSize).fill(new tile());
-	//the player
-		this.player = worm;
-	}
+	var boardActual = Array(boardSize).fill(new tile());
 
-	update() {
+	console.log("Made array of size: " + boardActual.length + " from: " + boardSize);
+	//the player
+	var player = worm;
+
+	function update() {
 		player.update(/*when key is pressed send event*/);
 
 		/////CONSIDER MOVING CHARACTER GENERATION OF NON-OCCUPIED TILE LOGIC TO TILE CLASS/////
@@ -43,7 +43,13 @@ class board {
 			score += player.score;
 		else if(player.collide)
 			gameOver = true;
-
 	}
 
-}
+	function getBoard() {
+		return boardActual;
+	}
+
+	return {
+		getBoard, update
+	}
+})();

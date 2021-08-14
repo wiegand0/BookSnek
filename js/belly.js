@@ -1,19 +1,17 @@
 //belly is the mechanic attached to the player that adds depth to the classic snake game
 
-class belly {
+function belly() {
 	stomach;
 	//searchindex <-- for later implementation to eliminate repeat searches
 
-	constructor() {
-		this.stomach = '';
-	}
+	var stomach = '';
 
-	update(addMe) {
+	this.update = function(addMe) {
 		stomach += addMe;
 		searchBelly();
 	}
 
-	search_belly() {
+	this.search_belly = function() {
 		//let backIndex = 0; <-- implement alongside searchindex
 
 		//tempWord to be s
@@ -35,10 +33,10 @@ class belly {
 		}
 	}
 
-	empty_word(theWord) {
+	this.empty_word = function(theWord) {
 		let regex = /theWord/i;
 		let newStomach = stomach.replace(regex, '');
 
-		this.stomach = newStomach;
+		stomach = newStomach;
 	}
 }

@@ -2,36 +2,33 @@
 
 //game conatiner runs the game loop, contains the instance of the actual game
 
-class gameContainer {
+/*
+var gameContainer = (function {
 
-	constructor() {
-		this.running = false;
-		this.gameActual = new board();
+	var running = false;
+	var gameActual = new board();
 
-		this.run();
-	}
+	this.run = function() {
 
-	run() {
-
-		console.log(this.gameActual.boardActual);
-		while(this.running) {
+		console.log(gameActual.boardActual);
+		while(running) {
 			console.log("runnin");
-			this.input();
-			this.update();
-			this.render();
+			input();
+			update();
+			render();
 		}
 		this.render();
 	}
 
-	input() {
+	this.input = function() {
 
 	}
 
-	update() {
+	this.update = function() {
 
 	}
 
-	render() {
+	this.render = function() {
 		for(const till in this.gameActual.boardActual) {
 
 			const para = document.createElement("div");
@@ -47,6 +44,51 @@ class gameContainer {
 
 		}
 	}
-}
+}*/
 
-let startIt = new gameContainer();
+var gameContainer = (function () {
+	var running = false;
+
+	function update() {
+
+	}
+
+	function input() {
+
+	}
+
+	function render() {
+		for(const till of board.getBoard()) {
+
+			const para = document.createElement("div");
+			para.setAttribute("class","tile")
+			const node = document.createTextNode(till.getContent());
+
+			para.appendChild(node);
+
+			const element = document.getElementById("gameContainer");
+			element.appendChild(para)
+
+			console.log("adding " + till.getContent());
+
+		}
+	}
+
+	function run() {
+
+		while(running) {
+			console.log("runnin");
+			input();
+			update();
+			render();
+		}
+
+		render();
+	}
+
+	return {
+		run
+	}
+})();
+
+gameContainer.run();
