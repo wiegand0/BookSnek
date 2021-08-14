@@ -6,10 +6,17 @@
 	background-color:  pink;
 }
 
+
 .tile {
-	background-color:  pink;
+	background-color:  lightgray;
 	width:  1em;
 	height:  1em;
+}
+
+.tileW {
+	width:  1em;
+	height:  1em;
+	background-color: green;
 }
 
 #gameContainer {

@@ -1,56 +1,9 @@
-
-
 //game conatiner runs the game loop, contains the instance of the actual game
-
-/*
-var gameContainer = (function {
-
-	var running = false;
-	var gameActual = new board();
-
-	this.run = function() {
-
-		console.log(gameActual.boardActual);
-		while(running) {
-			console.log("runnin");
-			input();
-			update();
-			render();
-		}
-		this.render();
-	}
-
-	this.input = function() {
-
-	}
-
-	this.update = function() {
-
-	}
-
-	this.render = function() {
-		for(const till in this.gameActual.boardActual) {
-
-			const para = document.createElement("div");
-			para.setAttribute("class","tile")
-			const node = document.createTextNode(this.gameActual.boardActual[till].content);
-
-			para.appendChild(node);
-
-			const element = document.getElementById("gameContainer");
-			element.appendChild(para)
-
-			console.log("adding " + this.gameActual.boardActual[till].content);
-
-		}
-	}
-}*/
-
 var gameContainer = (function () {
-	var running = false;
+	var running = true;
 
 	function update() {
-
+		board.update();
 	}
 
 	function input() {
@@ -58,10 +11,16 @@ var gameContainer = (function () {
 	}
 
 	function render() {
-		for(const till of board.getBoard()) {
 
+		document.getElementById("gameContainer").innerHTML = "";
+
+		for(const till of board.getBoard()) {
 			const para = document.createElement("div");
-			para.setAttribute("class","tile")
+			if(till.getWormed()) { 
+				para.setAttribute("class","tileW");
+			} else {
+				para.setAttribute("class","tile");
+			}
 			const node = document.createTextNode(till.getContent());
 
 			para.appendChild(node);
@@ -76,14 +35,14 @@ var gameContainer = (function () {
 
 	function run() {
 
-		while(running) {
-			console.log("runnin");
-			input();
-			update();
-			render();
-		}
+		setInterval(console.log("does it even work"),1000);
 
-		render();
+		if(running) {
+			setInterval(function () {console.log("runnin")},1000);
+			setInterval(input,1);
+			setInterval(update,1000);
+			setInterval(render, 1000);
+		}
 	}
 
 	return {
