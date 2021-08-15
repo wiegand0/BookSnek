@@ -7,40 +7,29 @@ var worm = (function() {
 
 	wormActual.push(new tile());
 	wormActual.push(new tile());
-	wormActual.push(new tile());
-	wormActual.push(new tile());
-	wormActual.push(new tile());
-	wormActual.push(new tile());
-	wormActual.push(new tile());
-	wormActual.push(new tile());
 
 	wormActual[0].setLocation(0);
 	wormActual[1].setLocation(25);
-	wormActual[2].setLocation(26);
-	wormActual[3].setLocation(1);
-	wormActual[4].setLocation(2);
-	wormActual[5].setLocation(27);
-	wormActual[6].setLocation(28);
-	wormActual[7].setLocation(3);
 	wormActual[0].update(true, false, true);
-	wormActual[1].update(true, false, false);
-	wormActual[2].update(true, false, false);
-	wormActual[3].update(true, false, false);
-	wormActual[4].update(true, false, false);
-	wormActual[5].update(true, false, false);
-	wormActual[6].update(true, false, false);
-	wormActual[7].update(true, true, false);
+	wormActual[1].update(true, true, false);
 
 	var score = 0;
 	var wormBel = new belly();
 	var eating = false;
 	var orientation = 3;
 	var collided = false;
-	var location = 3;
+	var location = 260;
 
 	function eat(boardCurrent) {
-		//check the tile to see if there's any content to eat 
-		return boardCurrent;
+		//check the tile to see if there's any content to eat
+		let boardTemp = boardCurrent;
+
+		console.log("HERE: " + location);
+
+		wormBel.update(boardTemp[location].getContent());
+		boardTemp[location].setContent("");
+
+		return boardTemp;
 	}
 
 	function move(boardCurrent) {
@@ -53,14 +42,14 @@ var worm = (function() {
 					location -= boardWidth;
 				else
 					//trigger game over
-					return;
+					return boardCurrent;
 				break;
 			case 1:
 				if(location < boardSize-boardWidth)
 					location += boardWidth;
 				else
 					//trigger game over
-					return;
+					return boardCurrent;
 				break;
 			case 2:
 				if(location%boardWidth != 0)
@@ -74,7 +63,7 @@ var worm = (function() {
 					location++;
 				else
 					//trigger game over
-					return;
+					return boardCurrent;
 				break;
 		}
 
@@ -113,16 +102,19 @@ var worm = (function() {
 	}
 
 	function update(boardCurrent, boardWidth, boardHeight) {
-		//move the worm, update the tiles on the board
 
+		//move the worm, update board
 		let newBoard = move(boardCurrent, boardWidth, boardHeight);
+		
 		//eat the tile, update board
 		newBoard = eat(newBoard);
+		
 		return newBoard;
 	}
 
 	function changeDirection(e) {
 
+		//for prevention of doubling back on self
 		let head = wormActual[wormActual.length-1].getLocation(), neck = wormActual[wormActual.length-2].getLocation();
 
 		console.log("Changin " + head + " : " + neck);
@@ -158,8 +150,12 @@ var worm = (function() {
 		return boardUpdated;
 	}
 
+	function getBelly() {
+		return wormBel;
+	}
+
 	return {
-		update, init, changeDirection
+		update, init, getBelly, changeDirection
 	}
 
 })();

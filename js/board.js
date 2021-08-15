@@ -70,7 +70,11 @@ var board = (function() {
 		player.changeDirection(e);
 	}
 
+	function getPlayer() {
+		return player;
+	}
+
 	return {
-		getBoard, update, init, keyDown
+		getBoard, update, init, keyDown, getPlayer
 	}
 })();

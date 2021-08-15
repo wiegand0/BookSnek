@@ -30,9 +30,11 @@ var gameContainer = (function () {
 
 			const element = document.getElementById("gameContainer");
 			element.appendChild(para)
-
-
 		}
+
+		document.getElementById("belly").innerHtml = board.getPlayer().getBelly().getContent();
+
+		console.log("BELLY: " + board.getPlayer().getBelly().getContent());
 	}
 
 	function init() {
