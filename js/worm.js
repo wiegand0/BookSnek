@@ -122,21 +122,26 @@ var worm = (function() {
 	}
 
 	function changeDirection(e) {
+
+		let head = wormActual[wormActual.length-1].getLocation(), neck = wormActual[wormActual.length-2].getLocation();
+
+		console.log("Changin " + head + " : " + neck);
+
 		switch(e.key) {
 			case "ArrowUp":
-				if(orientation != 1)
+				if(neck != head - boardWidth)
 					orientation = 0;
 				break;
 			case "ArrowDown":
-				if(orientation != 0)
+				if(neck != head + boardWidth)
 					orientation = 1;
 				break;
 			case "ArrowLeft":
-				if(orientation != 3)
+				if(neck != --head)
 					orientation = 2;
 				break;
 			case "ArrowRight":
-				if(orientation != 2)
+				if(neck != ++head)
 					orientation = 3;
 				break;
 		}
