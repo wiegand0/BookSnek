@@ -1,8 +1,9 @@
 //game conatiner runs the game loop, contains the instance of the actual game
+console.log("gameContainer");
 var gameContainer = (function () {
-	var running = true;
 
 	function update() {
+		console.log("i ran");
 		board.update();
 	}
 
@@ -11,6 +12,8 @@ var gameContainer = (function () {
 	}
 
 	function render() {
+
+		console.log("rendering");
 
 		document.getElementById("gameContainer").innerHTML = "";
 
@@ -28,26 +31,31 @@ var gameContainer = (function () {
 			const element = document.getElementById("gameContainer");
 			element.appendChild(para)
 
-			console.log("adding " + till.getContent());
 
 		}
+	}
+
+	function init() {
+		//board.init();
+		setInterval(run, 1000);
 	}
 
 	function run() {
+		//let timeElapsed = currentTime - lastUpdate;
+		update();
+		render();
+	}
 
-		setInterval(console.log("does it even work"),1000);
-
-		if(running) {
-			setInterval(function () {console.log("runnin")},1000);
-			setInterval(input,1);
-			setInterval(update,1000);
-			setInterval(render, 1000);
-		}
+	function arrowKey(e) {
+		board.keyDown(e);
 	}
 
 	return {
-		run
+		init, arrowKey
 	}
 })();
 
-gameContainer.run();
+gameContainer.init();
+
+//listener for player input
+document.onkeydown = function (e) {gameContainer.arrowKey(e)};

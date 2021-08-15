@@ -1,6 +1,8 @@
 //board class contains all the contents of the game, player, score, environment etc.
 
 const boardWidth = 25, boardHeight = 20, boardSize = boardWidth * boardHeight;
+console.log("board");
+
 
 //can't access global variable inside module??
 var board = (function() {
@@ -27,7 +29,6 @@ var board = (function() {
 	boardActual = player.update(boardActual, boardWidth, boardHeight);
 
 	function update() {
-		player.update(boardActual,boardWidth,boardHeight);
 
 		/////CONSIDER MOVING CHARACTER GENERATION OF NON-OCCUPIED TILE LOGIC TO TILE CLASS/////
 		//pick random letter in ASCII, convert it to character
@@ -35,21 +36,18 @@ var board = (function() {
 		let newTileContent = String.fromCharCode(Math.random() * (90 - 65) + 65);
 
 
-		console.log("I'm updatin...");
-		console.log(boardActual);
 		//choose a random tile
 		let tileChosen = Math.floor(Math.random() * boardSize);
-		console.log("At: " + tileChosen);
 		//when the tile picked is occupied by player, or is non-empty, pick again
 		while(boardActual[tileChosen].getContent() != "" || boardActual[tileChosen].getWormed()) {
-			console.log("reChose: " + tileChosen);
 			tileChosen = Math.floor(Math.random() * boardSize);
 		}
 		//when tile is selected, fill it
 		boardActual[tileChosen].setContent(newTileContent);
 		/////END OF CONTENT TO BE MOVED/////
 
-		boardActual = player.update(boardActual);
+
+		boardActual = player.update(boardActual,boardWidth,boardHeight);
 
 		//if they player has eaten a letter, add their score
 		//if they ate themselves, game over
@@ -63,7 +61,16 @@ var board = (function() {
 		return boardActual;
 	}
 
+	function init() {
+		boardActual = player.init(boardActual);
+	}
+
+	function keyDown(e) {
+		console.log("key push: " + e.code);
+		player.changeDirection(e);
+	}
+
 	return {
-		getBoard, update
+		getBoard, update, init, keyDown
 	}
 })();

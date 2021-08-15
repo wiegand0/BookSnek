@@ -1,4 +1,5 @@
 //tile is the basic object that makes up the game board environment
+
 var tile = (function () {
 	var content = "";
 	var wormed = false;
