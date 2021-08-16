@@ -66,7 +66,6 @@ var board = (function() {
 	}
 
 	function keyDown(e) {
-		console.log("key push: " + e.code);
 		player.changeDirection(e);
 	}
 

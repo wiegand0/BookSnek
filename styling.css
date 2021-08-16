@@ -6,6 +6,14 @@
 	background-color:  pink;
 }
 
+#belly {
+	width: auto;
+	height: 4em;
+	background-color: maroon;
+	font-size: 15pt;
+	text-align: center;
+	color: pink;
+}
 
 .tile {
 	background-color:  lightgray;
@@ -28,5 +36,5 @@
 
 	 position: absolute;
     top: 10em;
-    left: 45em;
+    left: 38%;
 }

@@ -1,40 +1,33 @@
 //belly is the mechanic attached to the player that adds depth to the classic snake game
 
 var belly = (function() {
-
-	//searchindex <-- for later implementation to eliminate repeat searches
-
+	
 	var stomach = '';
 
 	function update(addMe) {
 		stomach += addMe;
-		//searchBelly();
+		if(addMe != "")
+			searchBelly();
 	}
 
 	function searchBelly() {
-		//let backIndex = 0; <-- implement alongside searchindex
-
-/*
 
 		//tempWord to be s
-		let tempWord = tempWord2 = stomach;
+		let tempWord = stomach;
 
-		//search through string, dropping characters at beginning
-		for(var i = 0; i < tempWord.length - 2; i++) {
-			tempWord2 = tempWord
-			//if you find a word remove it
-			if(query_dictionary(tempWord))
-				empty_word(tempWord);
-			//drop characters from end of string, remove if word is found
-			for(var j = 0; j < tempWord2.size - 3; j++) {
-				tempWord2 = tempWord2.slice(-1);
-				if(query_dictionary(tempWord2)) 
-					empty_word(tempWord2);
+		//find all possible contiguous subsets of stomach
+		for(let i = 0; i < tempWord.length; i++) {
+			for(let j = i; j < tempWord.length; j++) {
+				let newStr = "";
+				for(let k = i; k <= j; k++) {
+					newStr += tempWord[k];
+				}
+				//we only care about them if they are at least 2 letters long
+				//lazy way out, consider reworking logic eliminating unecessary loops
+				if(newStr.length >= 2)
+					console.log(newStr);
 			}
-			tempWord = tempWord.slice(1);
 		}
-*/
-
 	}
 
 	function emptyWord(theWord) {

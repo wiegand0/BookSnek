@@ -13,8 +13,6 @@ var gameContainer = (function () {
 
 	function render() {
 
-		console.log("rendering");
-
 		document.getElementById("gameContainer").innerHTML = "";
 
 		for(const till of board.getBoard()) {
@@ -32,14 +30,15 @@ var gameContainer = (function () {
 			element.appendChild(para)
 		}
 
-		document.getElementById("belly").innerHtml = board.getPlayer().getBelly().getContent();
+		let para2 = document.querySelector("#belly");
+		let bellyText = para2.textContent;
 
-		console.log("BELLY: " + board.getPlayer().getBelly().getContent());
+		para2.textContent = board.getPlayer().getBelly().getContent();
 	}
 
 	function init() {
 		//board.init();
-		setInterval(run, 1000);
+		setInterval(run, 500);
 	}
 
 	function run() {

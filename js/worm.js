@@ -24,9 +24,13 @@ var worm = (function() {
 		//check the tile to see if there's any content to eat
 		let boardTemp = boardCurrent;
 
-		console.log("HERE: " + location);
+		if(boardTemp[location].getContent() != "")
+			eating = true;
+		else
+			eating = false;
 
 		wormBel.update(boardTemp[location].getContent());
+
 		boardTemp[location].setContent("");
 
 		return boardTemp;
@@ -116,8 +120,6 @@ var worm = (function() {
 
 		//for prevention of doubling back on self
 		let head = wormActual[wormActual.length-1].getLocation(), neck = wormActual[wormActual.length-2].getLocation();
-
-		console.log("Changin " + head + " : " + neck);
 
 		switch(e.key) {
 			case "ArrowUp":
