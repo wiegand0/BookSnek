@@ -116,6 +116,23 @@ var worm = (function() {
 		return newBoard;
 	}
 
+	function setOrientation() {
+		//set the new head based upon last position
+		wormActual.setOrientation(wormActual[length-2].getOrient());
+		//get orientation array with necessary info [newHead,newBody,lastBody]
+		let bodyOrient = [wormActual[length-1].getOrient()
+						 ,wormActual[length-2].getOrient()
+						 ,wormActual[length-3].getOrient()];
+		//12 cases
+		//set new head
+
+			//head is mod4
+		//set new body
+			//if array is monogomous, set body straight
+			//if array is not, check for left or right, up or down
+		//set
+	}
+
 	function changeDirection(e) {
 
 		//for prevention of doubling back on self

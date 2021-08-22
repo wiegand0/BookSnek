@@ -7,12 +7,13 @@
 }
 
 #belly {
-	width: auto;
-	height: 4em;
+	width: 45em;
+	height: auto;
 	background-color: maroon;
 	font-size: 15pt;
-	text-align: center;
 	color: pink;
+	position: absolute;
+	left: 25.5em;
 }
 
 .tile {
@@ -22,19 +23,40 @@
 }
 
 .tileW {
-	width:  1em;
-	height:  1em;
-	background-color: green;
+	margin: -2.5px;
+	background-image: url(resources/snekStraight.svg);
+}
+
+#tileHead {
+	background-image: url(resources/snekHead.svg);
+}
+
+#tileTail {
+	margin: -2.5px;
+	background-image: url(resources/snekTail.svg);
+}
+
+.tileBelly {
+	display: block;
+	float: left;
+	width: 2em;
+	height: 2em;
+	line-height: 2em;
+	background-color: gray;
+	color: white;
+	margin: 10px;
+	text-align: center;
+
 }
 
 #gameContainer {
 	display:  grid;
 	grid-gap:  5px;
-	grid-template-columns: repeat(25, 15px);
+	grid-template-columns: repeat(25, 1vw);
 	text-align:  center;
 	padding: auto;
 
-	 position: absolute;
+	position: absolute;
     top: 10em;
     left: 38%;
 }

@@ -3,7 +3,6 @@ console.log("gameContainer");
 var gameContainer = (function () {
 
 	function update() {
-		console.log("i ran");
 		board.update();
 	}
 
@@ -14,11 +13,18 @@ var gameContainer = (function () {
 	function render() {
 
 		document.getElementById("gameContainer").innerHTML = "";
+		document.getElementById("belly").innerHTML = "";
+
 
 		for(const till of board.getBoard()) {
 			const para = document.createElement("div");
 			if(till.getWormed()) { 
-				para.setAttribute("class","tileW");
+				if(till.getHead())
+					para.setAttribute("id","tileHead");
+				else if(till.getTail())
+					para.setAttribute("id","tileTail");
+				else
+					para.setAttribute("class","tileW");
 			} else {
 				para.setAttribute("class","tile");
 			}
@@ -30,10 +36,25 @@ var gameContainer = (function () {
 			element.appendChild(para)
 		}
 
-		let para2 = document.querySelector("#belly");
-		let bellyText = para2.textContent;
 
-		para2.textContent = board.getPlayer().getBelly().getContent();
+		let bellyString = board.getPlayer().getBelly().getContent();
+
+		for(let i = 0; i < 15; i++) {
+			const paraBelly = document.createElement("div");
+			paraBelly.setAttribute("class","tileBelly");
+
+
+			let nodeBelly = document.createTextNode("");
+
+			if(bellyString[i])
+				nodeBelly = document.createTextNode(bellyString[i]);
+	
+			paraBelly.appendChild(nodeBelly);
+
+			const elementBelly = document.getElementById("belly");
+			elementBelly.appendChild(paraBelly);
+		}
+
 	}
 
 	function init() {
