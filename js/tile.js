@@ -50,7 +50,7 @@ var tile = (function () {
 	}
 
 	function getOrient() {
-		return orientation;
+		return orient;
 	}
 
 	function setLocation(newIndex) {

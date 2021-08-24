@@ -34,9 +34,8 @@ var belly = (function() {
 		}
 
 
-
+		//sort array by length, longest to shortest
 		wordsArr.sort(function(a,b){return b.length - a.length});
-		console.log(wordsArr);
 
 		let validWords = [];
 		/*
@@ -48,7 +47,7 @@ var belly = (function() {
 				validWords.push(word);
 		}*/
 
-		console.log(validWords);
+		//console.log(validWords);
 	}
 
 	function dictionaryAPI(theWord){
@@ -59,18 +58,17 @@ var belly = (function() {
 		request.open('GET', requestURL);
 		request.responseType = 'json';
 
+		//need to return answer variable from this function
 		request.onload = function(answer) {
 			const wordValidity = request.response;
-			console.log(wordValidity);
+			//console.log(wordValidity);
 			if(wordValidity.title == "No Definitions Found" 
 				|| wordValidity.partOfSpeech == "symbol" 
 				|| wordValidity.partOfSpeech == "abbreviation" 
 				|| wordValidity.partOfSpeech == "prefix" 
 				|| wordValidity.partOfSpeech == "suffix") {
-				console.log("RETURNING FALSE");
 				answer = false;
 			} else {
-				console.log("RETURNING TRUE");
 				answer = true;
 			}
 

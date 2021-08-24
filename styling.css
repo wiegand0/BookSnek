@@ -22,9 +22,32 @@
 	height:  1em;
 }
 
-.tileW {
-	margin: -2.5px;
+.tileBody {
+	color: green;
+}
+
+.o0, .o1, .o2, .o3 {
 	background-image: url(resources/snekStraight.svg);
+}
+
+.o4, .o5, .o6, .o7 {
+	background-image: url(resources/snekTurnClockwise.svg);
+}
+
+.o8, .o9, .o10, .o11 {
+	background-image: url(resources/snekTurnCountercw.svg);
+}
+
+.rotate0 {
+	transform: rotate(-90deg);
+}
+
+.rotate2 {
+	transform: rotate(90deg);
+}
+
+.rotate3 {
+	transform: rotate(180deg);
 }
 
 #tileHead {
@@ -32,7 +55,6 @@
 }
 
 #tileTail {
-	margin: -2.5px;
 	background-image: url(resources/snekTail.svg);
 }
 

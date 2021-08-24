@@ -19,21 +19,24 @@ var gameContainer = (function () {
 		for(const till of board.getBoard()) {
 			const para = document.createElement("div");
 			if(till.getWormed()) { 
-				if(till.getHead())
+				if(till.getHead()) {
 					para.setAttribute("id","tileHead");
-				else if(till.getTail())
+					para.setAttribute("class","rotate" + till.getOrient());
+				} else if(till.getTail()) {
 					para.setAttribute("id","tileTail");
-				else
-					para.setAttribute("class","tileW");
+					para.setAttribute("class","rotate" + till.getOrient());
+				} else {
+					para.setAttribute("class","tileBody o" + till.getOrient() + " rotate" + till.getOrient()%4);
+				}
 			} else {
 				para.setAttribute("class","tile");
 			}
-			const node = document.createTextNode(till.getContent());
+			const node = document.createTextNode(till.getContent())
+			const element = document.getElementById("gameContainer");;
 
 			para.appendChild(node);
-
-			const element = document.getElementById("gameContainer");
 			element.appendChild(para)
+
 		}
 
 

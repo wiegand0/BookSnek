@@ -16,7 +16,7 @@ var board = (function() {
 	//tile array representation of board
 	var boardActual = [];
 
-	//didn't work?? = Array(boardSize).fill(new tile());
+	//Array(boardSize).fill(new tile()) doesn't work??;
 	//initialize tile locations
 	for(let i = 0; i < boardSize; i++) {
 		boardActual.push(new tile());
@@ -30,6 +30,9 @@ var board = (function() {
 
 	function update() {
 
+		//clear updates
+		boardUpdates = [];
+
 		/////CONSIDER MOVING CHARACTER GENERATION OF NON-OCCUPIED TILE LOGIC TO TILE CLASS/////
 		//pick random letter in ASCII, convert it to character
 			//(65-90 is capital letter range)
@@ -39,11 +42,18 @@ var board = (function() {
 		//choose a random tile
 		let tileChosen = Math.floor(Math.random() * boardSize);
 		//when the tile picked is occupied by player, or is non-empty, pick again
+		//keep it from infinite looping
+		let tries = 0;
 		while(boardActual[tileChosen].getContent() != "" || boardActual[tileChosen].getWormed()) {
 			tileChosen = Math.floor(Math.random() * boardSize);
+			//arbitrary break point to stop inifinite loop
+			if(tries>50)
+				break;
+			tries++;
 		}
-		//when tile is selected, fill it
-		boardActual[tileChosen].setContent(newTileContent);
+		//when tile is selected, fill it, if not because of break
+		if(tries<50)
+			boardActual[tileChosen].setContent(newTileContent);
 		/////END OF CONTENT TO BE MOVED/////
 
 
