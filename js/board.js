@@ -1,16 +1,10 @@
 //board class contains all the contents of the game, player, score, environment etc.
 
+//global board variables
 const boardWidth = 25, boardHeight = 20, boardSize = boardWidth * boardHeight;
-console.log("board");
-
 
 //can't access global variable inside module??
 var board = (function() {
-	var boardHeight = 20;
-	var boardWidth = 25;
-	var boardSize = boardWidth * boardHeight;
-	//actual score representation
-	var score = 0;
 	//game state
 	var gameOver = false;
 	//tile array representation of board
@@ -59,11 +53,8 @@ var board = (function() {
 
 		boardActual = player.update(boardActual,boardWidth,boardHeight);
 
-		//if they player has eaten a letter, add their score
-		//if they ate themselves, game over
-		if(player.eating)
-			score += player.score;
-		else if(player.collide)
+		//if they player eats themselves it's game over
+		if(player.collide)
 			gameOver = true;
 	}
 

@@ -2,7 +2,8 @@
 
 var belly = (function() {
 
-	var stomach = '';
+	var stomach = "";
+	var score = 0;
 
 	function update(addMe) {
 		stomach += addMe;
