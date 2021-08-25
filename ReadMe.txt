@@ -7,6 +7,7 @@
 	snake fashion.
 
 //!GENERAL TO BE DONE!//
+-fix everything getting run twice before rendering
 -stylize game
 -fix worm svg shifting to the left
 -finish belly.js
@@ -21,10 +22,10 @@
 	of tiles the player has eaten. It then removes the spelled words from the belly and 
 	calculates appropriate scoring for said words.
 		//!!TO BE DONE!!//
-	-remove spelled words from belly
-	-relocate score variable/functionality into belly module
-	-scoring function
-	-styling
+	-implement logic to prevent word evaluation halfway through spelling word
+		-tile that triggers evaluation?
+		-or longer word requirement?
+		-user key that triggers evaluation but costs points?
 
 //!!BOARD.JS!!//
 	The board is the collection of all the tiles that make up the game, as well as the worm
@@ -33,7 +34,6 @@
 	and instructs the worm to update itself, recieves said update information and places it
 	on the board appropriately.
 		//!!TO BE DONE!!//
-	-move scoring to belly module
 	-adjustable tile content generation speed
 
 //!!GAMECONTAINER.JS!!//

@@ -29,7 +29,6 @@ var belly = (function() {
 				//lazy way out, consider reworking logic eliminating unecessary loops
 				if(newStr.length >= 2) {
 					wordsArr.push(newStr);
-					dictionaryAPI(newStr);
 				}
 			}
 		}
@@ -39,14 +38,14 @@ var belly = (function() {
 		wordsArr.sort(function(a,b){return b.length - a.length});
 
 		let validWords = [];
-		/*
+		
 
 		for(const word of wordsArr) {
 			console.log("searching..." + word);
 			validWord = dictionaryAPI(word);
 			if(validWord)
 				validWords.push(word);
-		}*/
+		}
 
 		//console.log(validWords);
 	}
@@ -55,6 +54,7 @@ var belly = (function() {
 
 		let requestURL = "https://api.dictionaryapi.dev/api/v2/entries/en/" + theWord;
 		let request = new XMLHttpRequest();
+		let valid = false;
 
 		request.open('GET', requestURL);
 		request.responseType = 'json';
@@ -68,9 +68,12 @@ var belly = (function() {
 				|| wordValidity.partOfSpeech == "abbreviation" 
 				|| wordValidity.partOfSpeech == "prefix" 
 				|| wordValidity.partOfSpeech == "suffix") {
-				answer = false;
+				console.log("Setting " + theWord + " False");
+				valid = false;
 			} else {
-				answer = true;
+				console.log("Setting " + theWord + " True");
+				valid = true;
+				scoreWord(theWord);
 			}
 
 			//callback(answer);
@@ -84,10 +87,30 @@ var belly = (function() {
 	}
 
 	function emptyWord(theWord) {
-		let regex = /theWord/i;
+		let regex = new RegExp(theWord, 'i');
+
 		let newStomach = stomach.replace(regex, '');
 
+		console.log("Replaced " + theWord + " : " + newStomach);
+
 		stomach = newStomach;
+	}
+
+	function scoreWord(theWord) {
+		//an array ordered from most to least used letters in the english language
+		let letterWorth = ['e','t','a','i','n','o','s','h','r','d','l','u','c','m','f','w','y','g','p','b','v','k','q','j','x','z'];
+		let scored = 0;
+		let tempWord = theWord.toLowerCase();
+		for(let i = 0; i < tempWord.length; i++) {
+			let theLetter = tempWord[i];
+			let indexValue = letterWorth.findIndex(find => find == theLetter);
+			scored += indexValue;
+		}
+
+		emptyWord(theWord);
+
+		//add word score to total belly score
+		score += scored;
 	}
 
 	function getContent() {
