@@ -2,6 +2,8 @@
 console.log("gameContainer");
 var gameContainer = (function () {
 
+	let runInterval = setInterval(run, 500);
+
 	function update() {
 		board.update();
 	}
@@ -60,13 +62,15 @@ var gameContainer = (function () {
 
 	}
 
-	function init() {
-		//board.init();
-		setInterval(run, 500);
-	}
-
 	function run() {
 		//let timeElapsed = currentTime - lastUpdate;
+
+		if(board.getPlayer().getCollided()) {
+			clearInterval(runInterval);
+			console.log("GAME OVVVVERRRRRR");
+			return;
+		}
+
 		update();
 		render();
 	}
@@ -76,11 +80,10 @@ var gameContainer = (function () {
 	}
 
 	return {
-		init, arrowKey
+		arrowKey
 	}
 })();
 
-gameContainer.init();
 
 //listener for player input
 document.onkeydown = function (e) {gameContainer.arrowKey(e)};

@@ -45,42 +45,48 @@ var worm = (function() {
 			case 0:
 				if(location >= boardWidth-1)
 					location -= boardWidth;
-				else
+				else {
+					collided = true;
 					//trigger game over
-					return boardCurrent;
+					return boardCurrent; }
 				break;
 			case 1:
 				if(location%boardWidth != boardWidth-1)
 					location++;
-				else
+				else {
+					collided = true;
 					//trigger game over
-					return boardCurrent;
+					return boardCurrent; }
 				break;
 			case 2:
 				if(location < boardSize-boardWidth)
 					location += boardWidth;
-				else
+				else {
+					collided = true;
 					//trigger game over
-					return boardCurrent;
+					return boardCurrent; }
 				break;
 			case 3:
 				if(location%boardWidth != 0)
 					location--;
-				else
+				else {
+					collided = true;
 					//trigger game over
-					return boardCurrent;
+					return boardCurrent; }
 				break;
+		}
+
+		//if player ran into themselves, game over
+		if(boardCurrent[location].getWormed()) {
+			collided = true;
+			console.log("GAME OVVVVERRRRR")
+			return boardCurrent;
 		}
 
 		//move head
 		wormActual[wormActual.length-1].update(true,false,false);
 
 		//add new head
-		if(boardCurrent[location].getWormed()) {
-			console.log("GAME OVVVVERRRRR")
-			return;
-		}
-
 		wormActual.push(boardCurrent[location]);
 
 		//place head on board
@@ -208,26 +214,16 @@ var worm = (function() {
 		}
 	}
 
-	function init(boardCurrent) {
-		let boardUpdated = boardCurrent;
-
-		boardUpdated[wormActual[0].getLocation()].update(true,false,true);
-
-		for(let i = 1; i < wormActual.size-1; i++) {
-			boardUpdated[wormActual[i].getLocation()].update(true,false,false);
-		}
-		
-		boardUpdated[wormActual[wormActual.length-1].getLocation()].update(true,true,false);
-		
-		return boardUpdated;
-	}
-
 	function getBelly() {
 		return wormBel;
 	}
 
+	function getCollided() {
+		return collided;
+	}
+
 	return {
-		update, init, getBelly, changeDirection
+		update, getBelly, getCollided, changeDirection
 	}
 
 })();
