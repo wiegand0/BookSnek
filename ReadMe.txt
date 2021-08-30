@@ -9,11 +9,9 @@
 //!GENERAL TO BE DONE!//
 -fix everything getting run twice before rendering
 -stylize game
--fix worm svg shifting to the left
 -finish belly.js
 -finish board.js
 -finish gamecontainer.js
--finish tile.js
 -finish worm.js
 
 //!!BELLY.JS!!//
@@ -26,6 +24,7 @@
 		-tile that triggers evaluation?
 		-or longer word requirement?
 		-user key that triggers evaluation but costs points?
+	-add letter overload game over mechanic
 
 //!!BOARD.JS!!//
 	The board is the collection of all the tiles that make up the game, as well as the worm
@@ -61,5 +60,5 @@
 	It also contains the logic that sets the orientation/display of the worm pieces on the board.
 //!!TO BE DONE!!//
 	-troubleshoot tail orientation logic when length is 2
-	-implement game over logic
+	-troubleshoot body orientation logic when length is 3
 	-fix initialization logic

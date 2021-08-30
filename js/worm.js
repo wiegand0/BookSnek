@@ -18,9 +18,9 @@ var worm = (function() {
 	var wormBel = new belly();
 	var eating = false;
 	//0 is up, 1 is right, 2 is down, 3 is left
-	var orientation = 3;
+	var orientation = 1;
 	var collided = false;
-	var location = 4;
+	var location = 1;
 
 	function eat(boardCurrent) {
 		//check the tile to see if there's any content to eat

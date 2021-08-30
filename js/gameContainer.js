@@ -14,10 +14,12 @@ var gameContainer = (function () {
 
 	function render() {
 
+		//board html element
 		document.getElementById("gameContainer").innerHTML = "";
+		//belly html element
 		document.getElementById("belly").innerHTML = "";
 
-
+		//generate the html for the game board
 		for(const till of board.getBoard()) {
 			const para = document.createElement("div");
 			if(till.getWormed()) { 
@@ -44,8 +46,9 @@ var gameContainer = (function () {
 
 		let bellyString = board.getPlayer().getBelly().getContent();
 
-		for(let i = 0; i < 15; i++) {
-			const paraBelly = document.createElement("div");
+		//generate the belly tiles, currently preset to 12
+		for(let i = 0; i < 12; i++) {
+			const paraBelly = document.createElement("p");
 			paraBelly.setAttribute("class","tileBelly");
 
 
