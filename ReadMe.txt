@@ -25,6 +25,7 @@
 		-or longer word requirement?
 		-user key that triggers evaluation but costs points?
 	-add letter overload game over mechanic
+	-change from XMLHTTP to fetch
 
 //!!BOARD.JS!!//
 	The board is the collection of all the tiles that make up the game, as well as the worm

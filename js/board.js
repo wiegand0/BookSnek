@@ -22,21 +22,11 @@ var board = (function() {
 
 	boardActual = player.update(boardActual, boardWidth, boardHeight);
 
-	function update() {
-
-		//clear updates
-		boardUpdates = [];
-
-		/////CONSIDER MOVING CHARACTER GENERATION OF NON-OCCUPIED TILE LOGIC TO TILE CLASS/////
-		//pick random letter in ASCII, convert it to character
-			//(65-90 is capital letter range)
-		let newTileContent = String.fromCharCode(Math.random() * (90 - 65) + 65);
-
-
+	function pickTile() {
 		//choose a random tile
 		let tileChosen = Math.floor(Math.random() * boardSize);
 		//when the tile picked is occupied by player, or is non-empty, pick again
-		//keep it from infinite looping
+
 		let tries = 0;
 		while(boardActual[tileChosen].getContent() != "" || boardActual[tileChosen].getWormed()) {
 			tileChosen = Math.floor(Math.random() * boardSize);
@@ -45,12 +35,22 @@ var board = (function() {
 				break;
 			tries++;
 		}
-		//when tile is selected, fill it, if not because of break
+
+		//when tile is selected, fill it, if no tile is selected within 50 tries
+		//do nothing
 		if(tries<50)
-			boardActual[tileChosen].setContent(newTileContent);
-		/////END OF CONTENT TO BE MOVED/////
+			boardActual[tileChosen].generate();
+	}
 
+	function update() {
 
+		//clear updates
+		boardUpdates = [];
+
+		//pick a tile, fill it
+		pickTile();
+
+		//update the player on the board
 		boardActual = player.update(boardActual,boardWidth,boardHeight);
 
 		//if they player eats themselves it's game over

@@ -13,14 +13,18 @@ var tile = (function () {
 	//a way to keep track of where the tile is on the board
 	var indexed;
 
-	function generate(contentGiven) {
-		//if no content given, generate random capital letter
-		//else assign given to content
-		if(contentGiven == undefined) {
-			let asciiVal = Math.random() * (90 - 65) + 65;
-			content = String.fromCharCode(asciiVal);
-		} else
-			content = contentGiven;
+	function generate() {
+		let chance = Math.random()
+
+		//10% chance of generating word evaluation tile
+		if(chance < 0.1) {
+			content = String.fromCharCode(126);
+			return;
+		}
+
+		//generate random capital letter
+		let asciiVal = Math.random() * (90 - 65) + 65;
+		content = String.fromCharCode(asciiVal);
 	}
 
 	function update(wormedGiven, headGiven, tailGiven) {
@@ -66,6 +70,6 @@ var tile = (function () {
 	}
 
 	return {
-		update, getContent, getLocation, getWormed, getHead, getTail, getOrient, setLocation, setContent, setOrient
+		update, generate, getContent, getLocation, getWormed, getHead, getTail, getOrient, setLocation, setContent, setOrient
   	}
 }); 

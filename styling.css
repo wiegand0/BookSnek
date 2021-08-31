@@ -1,30 +1,4 @@
-#title {
-	margin-left: 25vw;
-	width: 50vw;
-	text-align: center;
-	font-size: 24pt;
-	background-color:  pink;
-}
-
-#belly {
-	width: 41.5vw;
-	padding-left: 4.5vw;
-	bottom: 10vh;
-	height: auto;
-	background-color: maroon;
-	color: pink;
-	position: absolute;
-	left: 27.5vw;
-}
-
-.tile {
-	background-color:  lightgray;
-	text-align: center;
-	line-height: 1vw;
-	font-size: 1vw;
-	width:  1vw;
-	height:  1vw;
-}
+/*!!WORM STYLING!!*/
 
 .tileBody {
 	color: green;
@@ -68,6 +42,18 @@
 	transform: rotate(180deg);
 }
 
+/*!!BELLY STYLING!!*/
+
+#belly {
+	width: 41.5vw;
+	padding-left: 4.5vw;
+	top: 90vh;
+	height: auto;
+	background-color: maroon;
+	color: pink;
+	position: absolute;
+	left: 27.5vw;
+}
 
 .tileBelly {
 	display: block;
@@ -82,6 +68,8 @@
 
 }
 
+/*!!GAME BOARD STYLING!!*/
+
 #gameContainer {
 	display:  grid;
 	grid-gap:  .3vw;
@@ -89,4 +77,21 @@
 	left: 33.9vw;
 
 	position: absolute;
+}
+
+#title {
+	margin-left: 25vw;
+	width: 50vw;
+	text-align: center;
+	font-size: 24pt;
+	background-color:  pink;
+}
+
+.tile {
+	background-color:  lightgray;
+	text-align: center;
+	line-height: 1vw;
+	font-size: 1vw;
+	width:  1vw;
+	height:  1vw;
 }

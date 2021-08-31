@@ -34,8 +34,7 @@ var worm = (function() {
 		wormBel.update(boardTemp[location].getContent());
 	}
 
-	function move(boardCurrent) {
-
+	function adjustCoordinates() {
 
 		//if going down add board width, opposite for going up
 		//0 is up, 1 is down, 2 is left, 3 is right
@@ -75,6 +74,12 @@ var worm = (function() {
 					return boardCurrent; }
 				break;
 		}
+
+	}
+
+	function move(boardCurrent) {
+
+		adjustCoordinates();
 
 		//if player ran into themselves, game over
 		if(boardCurrent[location].getWormed()) {
@@ -191,7 +196,8 @@ var worm = (function() {
 	function changeDirection(e) {
 
 		//for prevention of doubling back on self
-		let head = wormActual[wormActual.length-1].getLocation(), neck = wormActual[wormActual.length-2].getLocation();
+		let head = wormActual[wormActual.length-1].getLocation();
+		let neck = wormActual[wormActual.length-2].getLocation();
 
 		//0: up, 1: right, 2: down, 3: left
 		switch(e.key) {

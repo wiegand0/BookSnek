@@ -6,9 +6,14 @@ var belly = (function() {
 	var score = 0;
 
 	function update(addMe) {
-		stomach += addMe;
-		if(addMe != "")
+		
+		if(addMe == "~") {
 			searchBelly();
+			return;
+		}
+
+		stomach += addMe;
+		
 	}
 
 	function searchBelly() {
@@ -41,13 +46,10 @@ var belly = (function() {
 		
 
 		for(const word of wordsArr) {
-			console.log("searching..." + word);
 			validWord = dictionaryAPI(word);
 			if(validWord)
 				validWords.push(word);
 		}
-
-		//console.log(validWords);
 	}
 
 	function dictionaryAPI(theWord){
@@ -59,7 +61,6 @@ var belly = (function() {
 		request.open('GET', requestURL);
 		request.responseType = 'json';
 
-		//need to return answer variable from this function
 		request.onload = function(answer) {
 			const wordValidity = request.response;
 			//console.log(wordValidity);
@@ -75,15 +76,9 @@ var belly = (function() {
 				valid = true;
 				scoreWord(theWord);
 			}
-
-			//callback(answer);
 		}
 
 		request.send();
-
-		//let validWord = detect(answer);
-
-		//console.log("I DETECTED... " + validWord);
 	}
 
 	function emptyWord(theWord) {
@@ -91,7 +86,7 @@ var belly = (function() {
 
 		let newStomach = stomach.replace(regex, '');
 
-		console.log("Replaced " + theWord + " : " + newStomach);
+		console.log("FROM: " + stomach + " REPLACED: " + theWord + " NEW: " + newStomach);
 
 		stomach = newStomach;
 	}
