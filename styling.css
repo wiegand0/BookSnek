@@ -95,3 +95,30 @@
 	width:  1vw;
 	height:  1vw;
 }
+
+#gameMenu {
+	position: absolute;
+	left: 30vw;
+	height: 8vw;
+	width: 2vw;
+}
+
+#pause {
+	width: 2vw;
+	height: 2vw;
+	position: relative;
+}
+
+#reset {
+	top: 4vw;
+	width: 2vw;
+	height: 2vw;
+	position: relative;
+}
+
+#paused {
+	position: absolute;
+	font-size: 5vw;
+	top: 8vw;
+	left: 40.5vw;
+}

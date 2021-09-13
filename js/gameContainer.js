@@ -3,6 +3,18 @@ console.log("gameContainer");
 var gameContainer = (function () {
 
 	let runInterval = setInterval(run, 500);
+	let running = true;
+
+	//listener for pause button
+	const pauseButt = document.getElementById("pause");
+	pauseButt.addEventListener("click", pauseMe);
+
+	const pauseDisplay = document.getElementById("paused");
+
+	function pauseMe() {
+		running = !running;
+		pauseDisplay.setAttribute("hidden",running.toString());
+	}
 
 	function update() {
 		board.update();
@@ -74,8 +86,10 @@ var gameContainer = (function () {
 			return;
 		}
 
-		update();
-		render();
+		if(running) {
+			update();
+			render();
+		}
 	}
 
 	function arrowKey(e) {
@@ -86,7 +100,6 @@ var gameContainer = (function () {
 		arrowKey
 	}
 })();
-
 
 //listener for player input
 document.onkeydown = function (e) {gameContainer.arrowKey(e)};

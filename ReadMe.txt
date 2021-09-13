@@ -35,6 +35,7 @@
 	on the board appropriately.
 		//!!TO BE DONE!!//
 	-adjustable tile content generation speed
+	-adjustable worm speed
 
 //!!GAMECONTAINER.JS!!//
 	The gamecontainer initializes the board module and contains the game loop logic. It also
@@ -46,6 +47,7 @@
 	-consider moving away from html generation entirely
 	-add pause screen
 	-add restart button
+	-add score display
 	-add game over screen
 
 //!!TILE.JS!!//
