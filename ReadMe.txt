@@ -7,7 +7,6 @@
 	snake fashion.
 
 //!GENERAL TO BE DONE!//
--fix everything getting run twice before rendering
 -stylize game
 -finish belly.js
 -finish board.js
@@ -20,10 +19,6 @@
 	of tiles the player has eaten. It then removes the spelled words from the belly and 
 	calculates appropriate scoring for said words.
 		//!!TO BE DONE!!//
-	-implement logic to prevent word evaluation halfway through spelling word
-		-tile that triggers evaluation?
-		-or longer word requirement?
-		-user key that triggers evaluation but costs points?
 	-add letter overload game over mechanic
 	-change from XMLHTTP to fetch
 
@@ -46,8 +41,7 @@
 	-optimize render, stop re-rendering whole board every update
 	-consider moving away from html generation entirely
 	-remove keyListener when paused
-	-display message when paused
-	-add restart button
+	-add restart button functionality
 	-add score display
 	-add game over screen
 
