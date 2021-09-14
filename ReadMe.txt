@@ -45,7 +45,8 @@
 	-consider altering game loop logic to not rely on setInterval
 	-optimize render, stop re-rendering whole board every update
 	-consider moving away from html generation entirely
-	-add pause screen
+	-remove keyListener when paused
+	-display message when paused
 	-add restart button
 	-add score display
 	-add game over screen

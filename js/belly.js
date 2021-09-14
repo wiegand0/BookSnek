@@ -5,6 +5,11 @@ var belly = (function() {
 	var stomach = "";
 	var score = 0;
 
+	function destroy() {
+		stomach = "";
+		score = 0;
+	}
+
 	function update(addMe) {
 		
 		if(addMe == "~") {
@@ -113,6 +118,6 @@ var belly = (function() {
 	}
 
 	return {
-		update, getContent
+		update, getContent, destroy
 	}
 });

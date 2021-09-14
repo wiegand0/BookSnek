@@ -5,22 +5,31 @@ const boardWidth = 25, boardHeight = 20, boardSize = boardWidth * boardHeight;
 
 //can't access global variable inside module??
 var board = (function() {
+
 	//game state
 	var gameOver = false;
+
 	//tile array representation of board
 	var boardActual = [];
-
-	//Array(boardSize).fill(new tile()) doesn't work??;
-	//initialize tile locations
-	for(let i = 0; i < boardSize; i++) {
-		boardActual.push(new tile());
-		boardActual[i].setLocation(i);
-	}
-
 	//the player
 	var player = worm;
 
-	boardActual = player.update(boardActual, boardWidth, boardHeight);
+	function initialize() {	
+
+		//Array(boardSize).fill(new tile()) doesn't work??;
+		//initialize tile locations
+		for(let i = 0; i < boardSize; i++) {
+			boardActual.push(new tile());
+			boardActual[i].setLocation(i);
+		}
+
+		//boardActual = player.update(boardActual, boardWidth, boardHeight);
+	}
+
+	function reset() {
+		worm.destruct();
+		boardActual = [];
+	}
 
 	function pickTile() {
 		//choose a random tile
@@ -75,6 +84,6 @@ var board = (function() {
 	}
 
 	return {
-		getBoard, update, init, keyDown, getPlayer
+		getBoard, update, init, keyDown, getPlayer, reset, initialize
 	}
 })();

@@ -1,26 +1,34 @@
 //worm is the player controlled entity that allows player to interact with game
 
 var worm = (function() {
-	//how to instantiate its place on the board without pointers?
-		//pass the whole board in?
 	var wormActual = [];
-
-	wormActual.push(new tile());
-	wormActual.push(new tile());
-
-	wormActual[0].setLocation(0);
-	wormActual[1].setLocation(1);
-	wormActual[0].setOrient(1);
-	wormActual[1].setOrient(1);
-	wormActual[0].update(true, false, true);
-	wormActual[1].update(true, true, false);
-
 	var wormBel = new belly();
 	var eating = false;
 	//0 is up, 1 is right, 2 is down, 3 is left
 	var orientation = 1;
 	var collided = false;
 	var location = 1;
+
+	function destruct() {
+		wormActual = [];
+		location = 1;
+		orientation = 1;
+		collided = false;
+		wormBel.destroy();
+		console.log("DESTROYED");
+	}
+
+	function initialize() {
+		wormActual.push(new tile());
+		wormActual.push(new tile());
+
+		wormActual[0].setLocation(0);
+		wormActual[1].setLocation(1);
+		wormActual[0].setOrient(1);
+		wormActual[1].setOrient(1);
+		wormActual[0].update(true, false, true);
+		wormActual[1].update(true, true, false);
+	}
 
 	function eat(boardCurrent) {
 		//check the tile to see if there's any content to eat
@@ -99,6 +107,7 @@ var worm = (function() {
 
 		//update head
 		wormActual[wormActual.length-1].update(true,true,false);
+		
 		//update head orientation
 		wormActual[wormActual.length-1].setOrient(orientation);
 
@@ -229,7 +238,7 @@ var worm = (function() {
 	}
 
 	return {
-		update, getBelly, getCollided, changeDirection
+		update, getBelly, getCollided, changeDirection, initialize, destruct
 	}
 
 })();

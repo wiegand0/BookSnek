@@ -2,18 +2,68 @@
 console.log("gameContainer");
 var gameContainer = (function () {
 
-	let runInterval = setInterval(run, 500);
 	let running = true;
 
+
+	//-----!!! DOCUMENT LISTENERS !!!-----//
 	//listener for pause button
 	const pauseButt = document.getElementById("pause");
 	pauseButt.addEventListener("click", pauseMe);
 
 	const pauseDisplay = document.getElementById("paused");
+	
+	//listener for reset button
+	const resetButt = document.getElementById("reset");
+	//!!deprecated until setInterval is refactored!!
+	//reset.addEventListener("click", resetMe);
+
+	const countDown = document.getElementById("countdown");
+
+	//-----!!!					  !!!-----//
+
+	//sleep function for countdown timer
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+
+	function countIn(count) {
+		countDown.innerHTML = count;
+	}
+
+	async function initialize() {
+		worm.initialize();
+		board.initialize();
+		run();
+
+
+		//make sure countdown is set to 3, display countdown
+		countDown.innerHTML = 3;
+		countDown.removeAttribute("hidden");
+
+		//sleep for 3 seconds, updating countdown
+		for(let i = 0; i < 3; i++)
+			await sleep(1000).then(() => { countIn(3-i); });
+
+		//hide countdown
+		await sleep(1000).then(() => { countDown.setAttribute("hidden",''); });
+
+		//REFACTOR AWAY FROM SETINTERVAL
+		let runInterval = setInterval(run, 500);
+	}
+
+	function resetMe() {
+		board.reset();
+		initialize();
+	}
 
 	function pauseMe() {
 		running = !running;
-		pauseDisplay.setAttribute("hidden",running.toString());
+
+		if(running)
+			pauseDisplay.setAttribute("hidden",true);
+		else
+			pauseDisplay.removeAttribute("hidden");
 	}
 
 	function update() {
@@ -78,10 +128,8 @@ var gameContainer = (function () {
 	}
 
 	function run() {
-		//let timeElapsed = currentTime - lastUpdate;
-
 		if(board.getPlayer().getCollided()) {
-			clearInterval(runInterval);
+			running = false;
 			console.log("GAME OVVVVERRRRRR");
 			return;
 		}
@@ -97,9 +145,11 @@ var gameContainer = (function () {
 	}
 
 	return {
-		arrowKey
+		arrowKey, initialize
 	}
 })();
+
+gameContainer.initialize();
 
 //listener for player input
 document.onkeydown = function (e) {gameContainer.arrowKey(e)};

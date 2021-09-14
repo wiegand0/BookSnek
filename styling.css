@@ -122,3 +122,10 @@
 	top: 8vw;
 	left: 40.5vw;
 }
+
+#countdown {
+	position: absolute;
+	font-size: 5vw;
+	top: 10.5vw;
+	left: 48.5vw;
+}
