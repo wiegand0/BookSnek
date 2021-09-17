@@ -2,7 +2,7 @@
 
 var belly = (function() {
 
-	var stomach = "";
+	var stomach = "TEST";
 	var score = 0;
 
 	function destroy() {
