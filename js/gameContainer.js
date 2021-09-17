@@ -109,7 +109,7 @@ var gameContainer = (function () {
 		let bellyString = board.getPlayer().getBelly().getContent();
 
 		//generate the belly tiles, currently preset to 12
-		for(let i = 0; i < 12; i++) {
+		for(let i = 0; i < 10; i++) {
 			const paraBelly = document.createElement("p");
 			paraBelly.setAttribute("class","tileBelly");
 

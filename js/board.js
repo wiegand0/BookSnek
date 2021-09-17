@@ -1,7 +1,7 @@
 //board class contains all the contents of the game, player, score, environment etc.
 
 //global board variables
-const boardWidth = 25, boardHeight = 20, boardSize = boardWidth * boardHeight;
+const boardWidth = 25, boardHeight = 25, boardSize = boardWidth * boardHeight;
 
 //can't access global variable inside module??
 var board = (function() {
