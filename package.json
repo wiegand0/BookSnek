@@ -6,14 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Wiegand0/BookSnek.git"
-  },
   "author": "Nicholas Wiegand",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Wiegand0/BookSnek/issues"
-  },
-  "homepage": "https://github.com/Wiegand0/BookSnek#readme"
+  "license": "MIT"
 }
