@@ -1,89 +1,94 @@
 //board class contains all the contents of the game, player, score, environment etc.
 
 //global board variables
-const boardWidth = 25, boardHeight = 25, boardSize = boardWidth * boardHeight;
+const boardWidth = 25,
+  boardHeight = 25,
+  boardSize = boardWidth * boardHeight;
 
 //can't access global variable inside module??
-var board = (function() {
+const board = (function () {
+  //game state
+  let gameOver = false;
 
-	//game state
-	var gameOver = false;
+  //tile array representation of board
+  let boardActual = [];
+  //the player
+  const player = worm;
 
-	//tile array representation of board
-	var boardActual = [];
-	//the player
-	var player = worm;
+  function initialize() {
+    //Array(boardSize).fill(new tile()) doesn't work??;
+    //initialize tile locations
+    for (let i = 0; i < boardSize; i++) {
+      boardActual.push(new tile());
+      boardActual[i].setLocation(i);
+    }
 
-	function initialize() {	
+    //boardActual = player.update(boardActual, boardWidth, boardHeight);
+  }
 
-		//Array(boardSize).fill(new tile()) doesn't work??;
-		//initialize tile locations
-		for(let i = 0; i < boardSize; i++) {
-			boardActual.push(new tile());
-			boardActual[i].setLocation(i);
-		}
+  function reset() {
+    worm.destruct();
+    boardActual = [];
+  }
 
-		//boardActual = player.update(boardActual, boardWidth, boardHeight);
-	}
+  function pickTile() {
+    //choose a random tile
+    let tileChosen = Math.floor(Math.random() * boardSize);
+    //when the tile picked is occupied by player, or is non-empty, pick again
 
-	function reset() {
-		worm.destruct();
-		boardActual = [];
-	}
+    let tries = 0;
+    while (
+      boardActual[tileChosen].getContent() != '' ||
+      boardActual[tileChosen].getWormed()
+    ) {
+      tileChosen = Math.floor(Math.random() * boardSize);
+      //arbitrary break point to stop inifinite loop
+      if (tries > 50) break;
+      tries++;
+    }
 
-	function pickTile() {
-		//choose a random tile
-		let tileChosen = Math.floor(Math.random() * boardSize);
-		//when the tile picked is occupied by player, or is non-empty, pick again
+    //when tile is selected, fill it, if no tile is selected within 50 tries
+    //do nothing
+    if (tries < 50) boardActual[tileChosen].generate();
+  }
 
-		let tries = 0;
-		while(boardActual[tileChosen].getContent() != "" || boardActual[tileChosen].getWormed()) {
-			tileChosen = Math.floor(Math.random() * boardSize);
-			//arbitrary break point to stop inifinite loop
-			if(tries>50)
-				break;
-			tries++;
-		}
+  function update() {
+    //clear updates
+    boardUpdates = [];
 
-		//when tile is selected, fill it, if no tile is selected within 50 tries
-		//do nothing
-		if(tries<50)
-			boardActual[tileChosen].generate();
-	}
+    //pick a tile, fill it
+    pickTile();
 
-	function update() {
+    //update the player on the board
+    boardActual = player.update(boardActual, boardWidth, boardHeight);
 
-		//clear updates
-		boardUpdates = [];
+    //if they player eats themselves it's game over
+    if (player.collide) gameOver = true;
+  }
 
-		//pick a tile, fill it
-		pickTile();
+  function getBoard() {
+    return boardActual;
+  }
 
-		//update the player on the board
-		boardActual = player.update(boardActual,boardWidth,boardHeight);
+  function init() {
+    boardActual = player.init(boardActual);
+  }
 
-		//if they player eats themselves it's game over
-		if(player.collide)
-			gameOver = true;
-	}
+  function keyDown(e) {
+    player.changeDirection(e);
+  }
 
-	function getBoard() {
-		return boardActual;
-	}
+  function getPlayer() {
+    return player;
+  }
 
-	function init() {
-		boardActual = player.init(boardActual);
-	}
-
-	function keyDown(e) {
-		player.changeDirection(e);
-	}
-
-	function getPlayer() {
-		return player;
-	}
-
-	return {
-		getBoard, update, init, keyDown, getPlayer, reset, initialize
-	}
+  return {
+    getBoard,
+    update,
+    init,
+    keyDown,
+    getPlayer,
+    reset,
+    initialize,
+  };
 })();

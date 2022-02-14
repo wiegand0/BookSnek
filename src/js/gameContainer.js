@@ -1,155 +1,154 @@
 //game conatiner runs the game loop, contains the instance of the actual game
-console.log("gameContainer");
-var gameContainer = (function () {
+console.log('gameContainer');
+const gameContainer = (function () {
+  let running = true;
 
-	let running = true;
+  //-----!!! DOCUMENT LISTENERS !!!-----//
+  //listener for pause button
+  const pauseButt = document.getElementById('pause');
+  pauseButt.addEventListener('click', pauseMe);
 
+  const pauseDisplay = document.getElementById('paused');
 
-	//-----!!! DOCUMENT LISTENERS !!!-----//
-	//listener for pause button
-	const pauseButt = document.getElementById("pause");
-	pauseButt.addEventListener("click", pauseMe);
+  //listener for reset button
+  const resetButt = document.getElementById('reset');
+  //!!deprecated until setInterval is refactored!!
+  //reset.addEventListener("click", resetMe);
 
-	const pauseDisplay = document.getElementById("paused");
-	
-	//listener for reset button
-	const resetButt = document.getElementById("reset");
-	//!!deprecated until setInterval is refactored!!
-	//reset.addEventListener("click", resetMe);
+  const countDown = document.getElementById('countdown');
 
-	const countDown = document.getElementById("countdown");
+  //-----!!!					  !!!-----//
 
-	//-----!!!					  !!!-----//
+  //sleep function for countdown timer
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
-	//sleep function for countdown timer
-	function sleep(ms) {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	}
+  function countIn(count) {
+    countDown.innerHTML = count;
+  }
 
+  async function initialize() {
+    worm.initialize();
+    board.initialize();
+    run();
 
-	function countIn(count) {
-		countDown.innerHTML = count;
-	}
+    //make sure countdown is set to 3, display countdown
+    countDown.innerHTML = 3;
+    countDown.removeAttribute('hidden');
 
-	async function initialize() {
-		worm.initialize();
-		board.initialize();
-		run();
+    //sleep for 3 seconds, updating countdown
+    for (let i = 0; i < 3; i++)
+      await sleep(1000).then(() => {
+        countIn(3 - i);
+      });
 
+    //hide countdown
+    await sleep(1000).then(() => {
+      countDown.setAttribute('hidden', '');
+    });
 
-		//make sure countdown is set to 3, display countdown
-		countDown.innerHTML = 3;
-		countDown.removeAttribute("hidden");
+    //REFACTOR AWAY FROM SETINTERVAL
+    let runInterval = setInterval(run, 500);
+  }
 
-		//sleep for 3 seconds, updating countdown
-		for(let i = 0; i < 3; i++)
-			await sleep(1000).then(() => { countIn(3-i); });
+  function resetMe() {
+    board.reset();
+    initialize();
+  }
 
-		//hide countdown
-		await sleep(1000).then(() => { countDown.setAttribute("hidden",''); });
+  function pauseMe() {
+    running = !running;
 
-		//REFACTOR AWAY FROM SETINTERVAL
-		let runInterval = setInterval(run, 500);
-	}
+    if (running) pauseDisplay.setAttribute('hidden', true);
+    else pauseDisplay.removeAttribute('hidden');
+  }
 
-	function resetMe() {
-		board.reset();
-		initialize();
-	}
+  function update() {
+    board.update();
+  }
 
-	function pauseMe() {
-		running = !running;
+  function input() {}
 
-		if(running)
-			pauseDisplay.setAttribute("hidden",true);
-		else
-			pauseDisplay.removeAttribute("hidden");
-	}
+  function render() {
+    //board html element
+    document.getElementById('gameContainer').innerHTML = '';
+    //belly html element
+    document.getElementById('belly').innerHTML = '';
 
-	function update() {
-		board.update();
-	}
+    //generate the html for the game board
+    for (const till of board.getBoard()) {
+      const para = document.createElement('div');
+      if (till.getWormed()) {
+        if (till.getHead()) {
+          para.setAttribute('id', 'tileHead');
+          para.setAttribute('class', 'rotate' + till.getOrient());
+        } else if (till.getTail()) {
+          para.setAttribute('id', 'tileTail');
+          para.setAttribute('class', 'rotate' + till.getOrient());
+        } else {
+          para.setAttribute(
+            'class',
+            'tileBody o' +
+              till.getOrient() +
+              ' rotate' +
+              (till.getOrient() % 4),
+          );
+        }
+      } else {
+        para.setAttribute('class', 'tile');
+      }
+      const node = document.createTextNode(till.getContent());
+      const element = document.getElementById('gameContainer');
 
-	function input() {
+      para.appendChild(node);
+      element.appendChild(para);
+    }
 
-	}
+    let bellyString = board.getPlayer().getBelly().getContent();
 
-	function render() {
+    //generate the belly tiles, currently preset to 12
+    for (let i = 0; i < 10; i++) {
+      const paraBelly = document.createElement('p');
+      paraBelly.setAttribute('class', 'tileBelly');
 
-		//board html element
-		document.getElementById("gameContainer").innerHTML = "";
-		//belly html element
-		document.getElementById("belly").innerHTML = "";
+      let nodeBelly = document.createTextNode('');
 
-		//generate the html for the game board
-		for(const till of board.getBoard()) {
-			const para = document.createElement("div");
-			if(till.getWormed()) { 
-				if(till.getHead()) {
-					para.setAttribute("id","tileHead");
-					para.setAttribute("class","rotate" + till.getOrient());
-				} else if(till.getTail()) {
-					para.setAttribute("id","tileTail");
-					para.setAttribute("class","rotate" + till.getOrient());
-				} else {
-					para.setAttribute("class","tileBody o" + till.getOrient() + " rotate" + till.getOrient()%4);
-				}
-			} else {
-				para.setAttribute("class","tile");
-			}
-			const node = document.createTextNode(till.getContent())
-			const element = document.getElementById("gameContainer");;
+      if (bellyString[i]) nodeBelly = document.createTextNode(bellyString[i]);
 
-			para.appendChild(node);
-			element.appendChild(para)
+      paraBelly.appendChild(nodeBelly);
 
-		}
+      const elementBelly = document.getElementById('belly');
+      elementBelly.appendChild(paraBelly);
+    }
+  }
 
+  function run() {
+    if (board.getPlayer().getCollided()) {
+      running = false;
+      console.log('GAME OVVVVERRRRRR');
+      return;
+    }
 
-		let bellyString = board.getPlayer().getBelly().getContent();
+    if (running) {
+      update();
+      render();
+    }
+  }
 
-		//generate the belly tiles, currently preset to 12
-		for(let i = 0; i < 10; i++) {
-			const paraBelly = document.createElement("p");
-			paraBelly.setAttribute("class","tileBelly");
+  function arrowKey(e) {
+    board.keyDown(e);
+  }
 
-
-			let nodeBelly = document.createTextNode("");
-
-			if(bellyString[i])
-				nodeBelly = document.createTextNode(bellyString[i]);
-	
-			paraBelly.appendChild(nodeBelly);
-
-			const elementBelly = document.getElementById("belly");
-			elementBelly.appendChild(paraBelly);
-		}
-
-	}
-
-	function run() {
-		if(board.getPlayer().getCollided()) {
-			running = false;
-			console.log("GAME OVVVVERRRRRR");
-			return;
-		}
-
-		if(running) {
-			update();
-			render();
-		}
-	}
-
-	function arrowKey(e) {
-		board.keyDown(e);
-	}
-
-	return {
-		arrowKey, initialize
-	}
+  return {
+    arrowKey,
+    initialize,
+  };
 })();
 
 gameContainer.initialize();
 
 //listener for player input
-document.onkeydown = function (e) {gameContainer.arrowKey(e)};
+document.onkeydown = function (e) {
+  gameContainer.arrowKey(e);
+};
