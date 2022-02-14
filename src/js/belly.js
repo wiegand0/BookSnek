@@ -47,7 +47,7 @@ const belly = function () {
     let validWords = [];
 
     for (const word of wordsArr) {
-      validWord = dictionaryAPI(word);
+      const validWord = dictionaryAPI(word);
       if (validWord) validWords.push(word);
     }
   }
@@ -149,3 +149,5 @@ const belly = function () {
     destroy,
   };
 };
+
+export { belly };

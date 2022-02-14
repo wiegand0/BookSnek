@@ -2,7 +2,7 @@ const path = require('path');
 
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // In dev mode if env.NODE_ENV is developer //
 const devMode = process.env.NODE_ENV === 'development';
@@ -12,9 +12,9 @@ const plugins = [
     React: 'react',
   }),
   // Will implement after refactoring code to React //
-  //   new HtmlWebpackPlugin({
-  //     template: 'src/index.html',
-  //   }),
+  new HtmlWebpackPlugin({
+    template: 'src/index.html',
+  }),
 ];
 
 // Enable MiniCss in production only //

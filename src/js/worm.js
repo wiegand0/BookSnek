@@ -1,3 +1,7 @@
+import { tile } from './tile';
+import { belly } from './belly';
+import { boardHeight, boardWidth, boardSize } from './boardDimensions';
+
 //worm is the player controlled entity that allows player to interact with game
 
 const worm = (function () {
@@ -227,3 +231,5 @@ const worm = (function () {
     destruct,
   };
 })();
+
+export { worm };

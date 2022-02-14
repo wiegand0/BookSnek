@@ -83,3 +83,5 @@ const tile = function () {
     setOrient,
   };
 };
+
+export { tile };

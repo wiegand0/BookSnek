@@ -1,9 +1,9 @@
+import { worm } from './worm'
+import { tile } from './tile'
+import { boardHeight, boardWidth, boardSize } from './boardDimensions';
+
 //board class contains all the contents of the game, player, score, environment etc.
 
-//global board variables
-const boardWidth = 25,
-  boardHeight = 25,
-  boardSize = boardWidth * boardHeight;
 
 //can't access global variable inside module??
 const board = (function () {
@@ -54,7 +54,7 @@ const board = (function () {
 
   function update() {
     //clear updates
-    boardUpdates = [];
+    // boardUpdates = [];
 
     //pick a tile, fill it
     pickTile();
@@ -92,3 +92,5 @@ const board = (function () {
     initialize,
   };
 })();
+
+export { board }

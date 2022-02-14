@@ -1,5 +1,4 @@
 // 3rd Party //
-
 import React from 'react';
 import reactDOM from 'react-dom';
 

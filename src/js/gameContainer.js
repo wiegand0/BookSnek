@@ -1,3 +1,7 @@
+import { worm } from './worm';
+import { board } from './board';
+import 'regenerator-runtime';
+
 //game conatiner runs the game loop, contains the instance of the actual game
 console.log('gameContainer');
 const gameContainer = (function () {
@@ -5,17 +9,17 @@ const gameContainer = (function () {
 
   //-----!!! DOCUMENT LISTENERS !!!-----//
   //listener for pause button
-  const pauseButt = document.getElementById('pause');
-  pauseButt.addEventListener('click', pauseMe);
+  // const pauseButt = document.getElementById('pause');
+  // pauseButt.addEventListener('click', pauseMe);
 
-  const pauseDisplay = document.getElementById('paused');
+  // const pauseDisplay = document.getElementById('paused');
 
   //listener for reset button
-  const resetButt = document.getElementById('reset');
+  // const resetButt = document.getElementById('reset');
   //!!deprecated until setInterval is refactored!!
   //reset.addEventListener("click", resetMe);
 
-  const countDown = document.getElementById('countdown');
+  // const countDown = document.getElementById('countdown');
 
   //-----!!!					  !!!-----//
 
@@ -24,11 +28,11 @@ const gameContainer = (function () {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  function countIn(count) {
+  function countIn(count, countDown) {
     countDown.innerHTML = count;
   }
 
-  async function initialize() {
+  async function initialize(countDown) {
     worm.initialize();
     board.initialize();
     run();
@@ -40,7 +44,7 @@ const gameContainer = (function () {
     //sleep for 3 seconds, updating countdown
     for (let i = 0; i < 3; i++)
       await sleep(1000).then(() => {
-        countIn(3 - i);
+        countIn(3 - i, countDown);
       });
 
     //hide countdown
@@ -57,7 +61,7 @@ const gameContainer = (function () {
     initialize();
   }
 
-  function pauseMe() {
+  function pauseMe(pauseDisplay) {
     running = !running;
 
     if (running) pauseDisplay.setAttribute('hidden', true);
@@ -143,12 +147,10 @@ const gameContainer = (function () {
   return {
     arrowKey,
     initialize,
+    pauseMe,
   };
 })();
 
-gameContainer.initialize();
+export { gameContainer };
 
-//listener for player input
-document.onkeydown = function (e) {
-  gameContainer.arrowKey(e);
-};
+// gameContainer.initialize();
