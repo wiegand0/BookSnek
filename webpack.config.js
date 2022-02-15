@@ -33,8 +33,8 @@ module.exports = {
 
   output: {
     filename: 'scripts/index.js',
-    path: path.resolve(__dirname, 'public/scripts'),
-    clean: true,
+    path: path.resolve(__dirname, 'public'),
+    clean: false,
   },
 
   plugins,
