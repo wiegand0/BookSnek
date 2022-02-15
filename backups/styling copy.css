@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap');
+
+/*!!WORM STYLING!!*/
+
+.tileBody {
+	color: green;
+	height: 1.3vw;
+	width: 1.3vw;
+}
+
+#tileHead {
+	background-image: url(../resources/snekHead.svg);
+	height: 1.3vw;
+	width: 1.3vw;
+	overflow: visible;
+}
+
+#tileTail {
+	background-image: url(../resources/snekTail.svg);
+	height: 1.3vw;
+	width: 1.3vw;
+}
+
+.o0, .o1, .o2, .o3 {
+	background-image: url(../resources/snekStraight.svg);
+}
+
+.o4, .o5, .o6, .o7 {
+	background-image: url(../resources/snekTurnClockwise.svg);
+}
+
+.o8, .o9, .o10, .o11 {
+	background-image: url(../resources/snekTurnCountercw.svg);
+}
+
+.rotate0 {
+	transform: rotate(-90deg);
+}
+
+.rotate2 {
+	transform: rotate(90deg);
+}
+
+.rotate3 {
+	transform: rotate(180deg);
+}
+
+/*!!BELLY STYLING!!*/
+
+#belly {
+	width: auto;
+	top: 42.5vw;
+	left: 30vw;
+	height: auto;
+	position: absolute;
+	z-index: 2;
+}
+
+.tileBelly {
+	font-family: 'Inter', sans-serif;
+	display: block;
+	float: left;
+	width: 4.02vw;
+	height: 4.02vw;	
+	margin: 0;
+
+	/*Text Styling*/
+	color: white;
+	text-align: center;
+	line-height: 4.02vw;
+	font-size: 4.02vw;
+	-webkit-text-stroke: 4px lightgray;
+}
+
+/*!!GAME BOARD STYLING!!*/
+
+#gameContainer {
+	width: auto;
+	left: 30vw;
+	top: 2vw;
+	position: absolute;
+	height: auto;
+	display:  grid;
+	padding: 4vw;
+	grid-template-columns: repeat(25, 1.3vw);
+}
+
+#gameBorder {
+	left: 26vw;
+	top: 2vw;
+	position: absolute;
+	z-index: 1;
+
+	display: grid;
+	grid-template-columns: repeat(12, 4.05vw);
+	grid-template-rows: repeat(11, 4.05vw);
+
+	grid-template-areas: "... topL hor hor hor hor hor hor hor hor topR ..."
+						 "... vert ... ... ... ... ... ... ... ... vert2 ..."
+						 "... vert ... ... ... ... ... ... ... ... vert2 ..."
+						 "... vert ... ... ... ... ... ... ... ... vert2 ..."
+						 "... vert ... ... ... ... ... ... ... ... vert2 ..."
+						 "... vert ... ... ... ... ... ... ... ... vert2 ..."
+						 "... vert ... ... ... ... ... ... ... ... vert2 ..."
+						 "... vert ... ... ... ... ... ... ... ... vert2 ..."
+						 "... tale ... ... ... ... ... ... ... ... vert2 ..."
+						 "botL hor2 hor2 hor2 hor2 hor2 hor2 hor2 hor2 hor2 botR head"
+						 "botL2 hor3 hor3 hor3 hor3 hor3 hor3 hor3 hor3 hor3 hor3 botR2";
+
+}
+
+.head {
+	grid-area: head;
+	background-image: url(../resources/snekHead.svg);
+	transform: rotate(-90deg);
+}
+
+.tale {
+	grid-area: tale;
+	background-image: url(../resources/snekTail.svg);
+	transform: rotate(-90deg);
+}
+
+.botL2 {
+	grid-area: botL2;
+	background-image: url(../resources/snekTurnCountercw.svg);
+}
+
+.botR2 {
+	grid-area: botR2;
+	background-image: url(../resources/snekTurnCountercw.svg);
+	transform: rotate(-90deg);
+}
+
+.hor3 {
+	grid-area: hor3;
+	background-image: url(../resources/snekStraight.svg);
+}
+
+.topL {
+	background-image: url(../resources/snekTurnClockwise.svg);
+	grid-area: topL;
+}
+
+.topR {
+	background-image: url(../resources/snekTurnClockwise.svg);
+	grid-area: topR;
+	transform: rotate(90deg);
+}
+
+.botL {
+	background-image: url(../resources/snekTurnClockwise.svg);
+	grid-area: botL;
+}
+
+.botR {
+	background-image: url(../resources/snekTurnClockwise.svg);
+	grid-area: botR;
+	transform: rotate(180deg);
+}
+
+.vert {
+	grid-area: vert;
+	background-image: url(../resources/snekVert.svg);
+}
+
+.hor {
+	grid-area: hor;
+	background-image: url(../resources/snekStraight.svg);
+}
+
+.vert2 {
+	grid-area: vert2;
+	background-image: url(../resources/snekVert.svg);
+	transform: rotate(180deg);
+}
+
+.hor2 {
+	grid-area: hor2;
+	background-image: url(../resources/snekStraight.svg);
+	transform: rotate(180deg);
+}
+
+.forst, .second {
+	background-color: pink;
+
+}
+
+#title {
+	font-family: 'Inter', sans-serif;
+	margin-left: 25vw;
+	width: 50vw;
+	text-align: center;
+	font-size: 24pt;
+}
+
+.tile {
+	font-family: 'Inter', sans-serif;
+	background-color:  lightgray;
+	text-align: center;
+	line-height: 1vw;
+	font-size: 1vw;
+	width:  1.3vw;
+	height:  1.3vw;
+}
+
+
+#pause {
+	top: 38.5vw;
+	left: 34.02vw;
+	width: 4.02vw;
+	height: 4.02vw;
+	position: absolute;
+	z-index: 2;
+}
+
+#reset {
+	top: 38.5vw;
+	left: 61.98vw;
+	width: 4.02vw;
+	height: 4.02vw;
+	position: absolute;
+	z-index: 2;
+}
+
+#paused {
+	font-family: 'Inter', sans-serif;
+	position: absolute;
+	font-size: 5vw;
+	top: 12vw;
+	left: 40vw;
+}
+
+#countdown {
+	font-family: 'Inter', sans-serif;
+	position: absolute;
+	font-size: 5vw;
+	top: 11vw;
+	left: 48.5vw;
+}
