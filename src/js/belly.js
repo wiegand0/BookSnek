@@ -1,5 +1,7 @@
 //belly is the mechanic attached to the player that adds depth to the classic snake game
 
+import { dictionaryAPI } from './dictionaryAPI';
+
 const belly = function () {
   let stomach = 'TEST';
   let score = 0;
@@ -10,7 +12,7 @@ const belly = function () {
   }
 
   function update(addMe) {
-    if (addMe == '~') {
+    if (addMe === '~') {
       searchBelly();
       return;
     }
@@ -18,7 +20,8 @@ const belly = function () {
     stomach += addMe;
   }
 
-  function searchBelly() {
+  async function searchBelly() {
+    if (stomach === '' || stomach.length <= 1) return;
     let wordsArr = [];
 
     //tempWord to be s
@@ -44,43 +47,32 @@ const belly = function () {
       return b.length - a.length;
     });
 
-    let validWords = [];
-
     for (const word of wordsArr) {
-      const validWord = dictionaryAPI(word);
-      if (validWord) validWords.push(word);
+      const validWord = await checkWord(word);
+      if (validWord) break;
     }
+    if(stomach !== tempWord) searchBelly();
   }
 
-  function dictionaryAPI(theWord) {
-    let requestURL =
-      'https://api.dictionaryapi.dev/api/v2/entries/en/' + theWord;
-    let request = new XMLHttpRequest();
+  async function checkWord(theWord) {
     let valid = false;
+    const wordValidity = await dictionaryAPI(theWord);
 
-    request.open('GET', requestURL);
-    request.responseType = 'json';
-
-    request.onload = function (answer) {
-      const wordValidity = request.response;
-      //console.log(wordValidity);
-      if (
-        wordValidity.title == 'No Definitions Found' ||
-        wordValidity.partOfSpeech == 'symbol' ||
-        wordValidity.partOfSpeech == 'abbreviation' ||
-        wordValidity.partOfSpeech == 'prefix' ||
-        wordValidity.partOfSpeech == 'suffix'
-      ) {
-        console.log('Setting ' + theWord + ' False');
-        valid = false;
-      } else {
-        console.log('Setting ' + theWord + ' True');
-        valid = true;
-        scoreWord(theWord);
-      }
-    };
-
-    request.send();
+    if (
+      wordValidity.title === 'No Definitions Found' ||
+      wordValidity[0].meanings[0].partOfSpeech === 'symbol' ||
+      wordValidity[0].meanings[0].partOfSpeech === 'abbreviation' ||
+      wordValidity[0].meanings[0].partOfSpeech === 'prefix' ||
+      wordValidity[0].meanings[0].partOfSpeech === 'suffix'
+    ) {
+      console.log('Setting ' + theWord + ' False');
+      valid = false;
+    } else {
+      console.log('Setting ' + theWord + ' True');
+      valid = true;
+      scoreWord(theWord);
+    }
+    return valid;
   }
 
   function emptyWord(theWord) {
