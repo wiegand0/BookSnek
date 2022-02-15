@@ -21,7 +21,9 @@ const belly = function () {
   }
 
   async function searchBelly() {
+    // Abort if stomach is empty or is 1 or less letters
     if (stomach === '' || stomach.length <= 1) return;
+    
     let wordsArr = [];
 
     //tempWord to be s
@@ -51,6 +53,7 @@ const belly = function () {
       const validWord = await checkWord(word);
       if (validWord) break;
     }
+    //If the belly has changed search again to check for other words
     if(stomach !== tempWord) searchBelly();
   }
 
