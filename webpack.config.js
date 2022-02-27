@@ -38,6 +38,10 @@ module.exports = {
   },
 
   plugins,
+  performance: {
+    maxEntrypointSize: 1024000,
+    maxAssetSize: 1024000,
+  },
   resolve: {
     extensions: ['.js'],
   },
