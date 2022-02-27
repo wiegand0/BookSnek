@@ -9,28 +9,28 @@
 }
 
 #tileHead {
-	background-image: url(resources/snekHead.svg);
+	background-image: url(../resources/snekHead.svg);
 	height: 1.3vw;
 	width: 1.3vw;
-	ovwerflow: visible;
+	overflow: visible;
 }
 
 #tileTail {
-	background-image: url(resources/snekTail.svg);
+	background-image: url(../resources/snekTail.svg);
 	height: 1.3vw;
 	width: 1.3vw;
 }
 
 .o0, .o1, .o2, .o3 {
-	background-image: url(resources/snekStraight.svg);
+	background-image: url(../resources/snekStraight.svg);
 }
 
 .o4, .o5, .o6, .o7 {
-	background-image: url(resources/snekTurnClockwise.svg);
+	background-image: url(../resources/snekTurnClockwise.svg);
 }
 
 .o8, .o9, .o10, .o11 {
-	background-image: url(resources/snekTurnCountercw.svg);
+	background-image: url(../resources/snekTurnCountercw.svg);
 }
 
 .rotate0 {
@@ -111,73 +111,73 @@
 
 .head {
 	grid-area: head;
-	background-image: url(resources/snekHead.svg);
+	background-image: url(../resources/snekHead.svg);
 	transform: rotate(-90deg);
 }
 
 .tale {
 	grid-area: tale;
-	background-image: url(resources/snekTail.svg);
+	background-image: url(../resources/snekTail.svg);
 	transform: rotate(-90deg);
 }
 
 .botL2 {
 	grid-area: botL2;
-	background-image: url(resources/snekTurnCountercw.svg);
+	background-image: url(../resources/snekTurnCountercw.svg);
 }
 
 .botR2 {
 	grid-area: botR2;
-	background-image: url(resources/snekTurnCountercw.svg);
+	background-image: url(../resources/snekTurnCountercw.svg);
 	transform: rotate(-90deg);
 }
 
 .hor3 {
 	grid-area: hor3;
-	background-image: url(resources/snekStraight.svg);
+	background-image: url(../resources/snekStraight.svg);
 }
 
 .topL {
-	background-image: url(resources/snekTurnClockwise.svg);
+	background-image: url(../resources/snekTurnClockwise.svg);
 	grid-area: topL;
 }
 
 .topR {
-	background-image: url(resources/snekTurnClockwise.svg);
+	background-image: url(../resources/snekTurnClockwise.svg);
 	grid-area: topR;
 	transform: rotate(90deg);
 }
 
 .botL {
-	background-image: url(resources/snekTurnClockwise.svg);
+	background-image: url(../resources/snekTurnClockwise.svg);
 	grid-area: botL;
 }
 
 .botR {
-	background-image: url(resources/snekTurnClockwise.svg);
+	background-image: url(../resources/snekTurnClockwise.svg);
 	grid-area: botR;
 	transform: rotate(180deg);
 }
 
 .vert {
 	grid-area: vert;
-	background-image: url(resources/snekVert.svg);
+	background-image: url(../resources/snekVert.svg);
 }
 
 .hor {
 	grid-area: hor;
-	background-image: url(resources/snekStraight.svg);
+	background-image: url(../resources/snekStraight.svg);
 }
 
 .vert2 {
 	grid-area: vert2;
-	background-image: url(resources/snekVert.svg);
+	background-image: url(../resources/snekVert.svg);
 	transform: rotate(180deg);
 }
 
 .hor2 {
 	grid-area: hor2;
-	background-image: url(resources/snekStraight.svg);
+	background-image: url(../resources/snekStraight.svg);
 	transform: rotate(180deg);
 }
 
