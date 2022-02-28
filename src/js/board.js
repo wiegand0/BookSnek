@@ -7,9 +7,9 @@ import { boardHeight, boardWidth, boardSize } from './boardDimensions';
 
 //can't access global variable inside module??
 const board = (function () {
+
   //game state
   let gameOver = false;
-
   //tile array representation of board
   let boardActual = [];
   //the player
@@ -66,16 +66,16 @@ const board = (function () {
     if (player.collide) gameOver = true;
   }
 
-  function getBoard() {
-    return boardActual;
-  }
-
   function init() {
     boardActual = player.init(boardActual);
   }
 
   function keyDown(e) {
     player.changeDirection(e);
+  }
+
+  function getBoard() {
+    return boardActual;
   }
 
   function getPlayer() {

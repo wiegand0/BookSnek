@@ -1,6 +1,6 @@
 //belly is the mechanic attached to the player that adds depth to the classic snake game
 
-import { dictionaryAPI } from './dictionaryAPI';
+import { dictionaryAPI } from './utilities';
 
 const belly = function () {
   let stomach = 'TEST';
@@ -11,6 +11,7 @@ const belly = function () {
     score = 0;
   }
 
+  //if not a word evaluation tile (~) add letter to belly
   function update(addMe) {
     if (addMe === '~') {
       searchBelly();
@@ -20,21 +21,23 @@ const belly = function () {
     stomach += addMe;
   }
 
+  //creates the array of all possible words
   async function searchBelly() {
     // Abort if stomach is empty or is 1 or less letters
     if (stomach === '' || stomach.length <= 1) return;
     
     let wordsArr = [];
 
-    //tempWord to be s
-    let tempWord = stomach;
+    //tempStomach to be searched
+    let tempStomach = stomach;
 
+    //tempStomach tempStomach
     //find all possible contiguous subsets of stomach
-    for (let i = 0; i < tempWord.length; i++) {
-      for (let j = i; j < tempWord.length; j++) {
+    for (let i = 0; i < tempStomach.length; i++) {
+      for (let j = i; j < tempStomach.length; j++) {
         let newStr = '';
         for (let k = i; k <= j; k++) {
-          newStr += tempWord[k];
+          newStr += tempStomach[k];
         }
         //we only care about them if they are at least 2 letters long
         //lazy way out, consider reworking logic eliminating unecessary loops
@@ -49,24 +52,27 @@ const belly = function () {
       return b.length - a.length;
     });
 
+    //sending words to be searched, will break when first word is found
     for (const word of wordsArr) {
       const validWord = await checkWord(word);
       if (validWord) break;
     }
+
     //If the belly has changed search again to check for other words
-    if(stomach !== tempWord) searchBelly();
+    if(stomach !== tempStomach) searchBelly();
   }
 
+  //calls the API, checks returned JSON to see if a word came back
   async function checkWord(theWord) {
     let valid = false;
-    const wordValidity = await dictionaryAPI(theWord);
+    const wordReturned = await dictionaryAPI(theWord);
 
     if (
-      wordValidity.title === 'No Definitions Found' ||
-      wordValidity[0].meanings[0].partOfSpeech === 'symbol' ||
-      wordValidity[0].meanings[0].partOfSpeech === 'abbreviation' ||
-      wordValidity[0].meanings[0].partOfSpeech === 'prefix' ||
-      wordValidity[0].meanings[0].partOfSpeech === 'suffix'
+      wordReturned.title === 'No Definitions Found' ||
+      wordReturned[0].meanings[0].partOfSpeech === 'symbol' ||
+      wordReturned[0].meanings[0].partOfSpeech === 'abbreviation' ||
+      wordReturned[0].meanings[0].partOfSpeech === 'prefix' ||
+      wordReturned[0].meanings[0].partOfSpeech === 'suffix'
     ) {
       console.log('Setting ' + theWord + ' False');
       valid = false;
@@ -78,18 +84,23 @@ const belly = function () {
     return valid;
   }
 
+  //removes valid words from the belly
   function emptyWord(theWord) {
+    //turn word into reg exp search
     let regex = new RegExp(theWord, 'i');
 
+    //remove word from the belly
     let newStomach = stomach.replace(regex, '');
 
     console.log(
       'FROM: ' + stomach + ' REPLACED: ' + theWord + ' NEW: ' + newStomach,
     );
 
+    //set updated belly
     stomach = newStomach;
   }
 
+  //scores word
   function scoreWord(theWord) {
     //an array ordered from most to least used letters in the english language
     let letterWorth = [

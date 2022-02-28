@@ -13,10 +13,11 @@ const tile = function () {
   //a way to keep track of where the tile is on the board
   let indexed;
 
+  //generates a letter to put in the tile
   function generate() {
     let chance = Math.random();
 
-    //10% chance of generating word evaluation tile
+    //10% chance of generating word evaluation tile (~)
     if (chance < 0.1) {
       content = String.fromCharCode(126);
       return;

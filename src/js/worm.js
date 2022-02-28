@@ -38,10 +38,12 @@ const worm = (function () {
     //check the tile to see if there's any content to eat
     let boardTemp = boardCurrent;
 
-    if (boardTemp[location].getContent() != '') eating = true;
-    else eating = false;
-
-    wormBel.update(boardTemp[location].getContent());
+    if (boardTemp[location].getContent() != '') { 
+      eating = true;
+      wormBel.update(boardTemp[location].getContent());
+    } else {
+      eating = false;
+    }
   }
 
   function adjustCoordinates() {
@@ -55,7 +57,7 @@ const worm = (function () {
         else {
           collided = true;
           //trigger game over
-          return boardCurrent;
+          return;
         }
         break;
       case 1:
@@ -63,7 +65,7 @@ const worm = (function () {
         else {
           collided = true;
           //trigger game over
-          return boardCurrent;
+          return;
         }
         break;
       case 2:
@@ -71,7 +73,7 @@ const worm = (function () {
         else {
           collided = true;
           //trigger game over
-          return boardCurrent;
+          return;
         }
         break;
       case 3:
@@ -79,7 +81,7 @@ const worm = (function () {
         else {
           collided = true;
           //trigger game over
-          return boardCurrent;
+          return;
         }
         break;
     }
@@ -138,7 +140,8 @@ const worm = (function () {
     eat(newBoard);
 
     //update eaten tile on board
-    newBoard[location].setContent('');
+    if(eating)
+      newBoard[location].setContent('');
 
     return newBoard;
   }
@@ -148,18 +151,18 @@ const worm = (function () {
 
     let length = wormActual.length;
 
+    //can't have turns in a 2 length worm, return
     if (length < 3) return;
 
-    //the new body that needs to be oriented
-    let newBody = wormActual[length - 2];
-
     //the new head that needs to be oriented
-    let newHead = wormActual[length - 1];
+    const newHead = wormActual[length - 1];
+
+    const previousBody = wormActual[length - 3];
 
     //get orientation array with necessary info [newHead,lastBody]
     let bodyOrient = [
       newHead.getOrient(),
-      wormActual[length - 3].getOrient() % 4,
+      previousBody.getOrient() % 4,
     ];
 
     //8 cases of curved body
