@@ -2,7 +2,7 @@
 
 ## ABOUT
 
-    Book snake is a combination of the game of snake and bookworm. The player controls a snake that moves around the board at a set rate, eating letters that appear on the board. The goal of the game is to eat the tiles in an order that spells out words, and collect points accordingly. This is done while the player avoids running into the edge of the board and themselves in classic snake fashion.
+Book snake is a combination of the game of snake and bookworm. The player controls a snake that moves around the board at a set rate, eating letters that appear on the board. The goal of the game is to eat the tiles in an order that spells out words, and collect points accordingly. This is done while the player avoids running into the edge of the board and themselves in classic snake fashion.
 
 ## GENERAL TO BE DONE
 
