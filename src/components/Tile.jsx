@@ -1,4 +1,4 @@
-function Tile({ isPlayer, content, head, tail, orientation, index }) {
+function Tile({ update, isPlayer, content, head, tail, orientation, index }) {
   function getClassName() {
     let className = 'tile';
     if (isPlayer) {
@@ -26,6 +26,8 @@ function Tile({ isPlayer, content, head, tail, orientation, index }) {
     //generate random capital letter
     let asciiVal = Math.random() * (90 - 65) + 65;
     content = String.fromCharCode(asciiVal);
+
+    update = false;
   }
 
   return <div className={getClassName()}>{content}</div>;
