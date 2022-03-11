@@ -8,14 +8,14 @@
   width: 1.3vw;
 }
 
-#tileHead {
+.tileHead {
   background-image: url(../resources/snekHead.svg);
   height: 1.3vw;
   width: 1.3vw;
   overflow: visible;
 }
 
-#tileTail {
+.tileTail {
   background-image: url(../resources/snekTail.svg);
   height: 1.3vw;
   width: 1.3vw;
@@ -113,7 +113,7 @@
     '... vert ... ... ... ... ... ... ... ... vert2 ...'
     '... vert ... ... ... ... ... ... ... ... vert2 ...'
     '... vert ... ... ... ... ... ... ... ... vert2 ...'
-    '... tale ... ... ... ... ... ... ... ... vert2 ...'
+    '... tail ... ... ... ... ... ... ... ... vert2 ...'
     'botL hor2 hor2 hor2 hor2 hor2 hor2 hor2 hor2 hor2 botR head'
     'botL2 hor3 hor3 hor3 hor3 hor3 hor3 hor3 hor3 hor3 hor3 botR2';
 }
@@ -124,8 +124,8 @@
   transform: rotate(-90deg);
 }
 
-.tale {
-  grid-area: tale;
+.tail {
+  grid-area: tail;
   background-image: url(../resources/snekTail.svg);
   transform: rotate(-90deg);
 }

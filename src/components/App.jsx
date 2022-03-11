@@ -1,30 +1,25 @@
 import { useEffect } from 'react';
 import { gameContainer } from '../js/gameContainer';
 
-const App = () => {
-  
+function App() {
   useEffect(() => {
     const countDown = document.getElementById('countdown');
-    console.log(countDown, "From useEffect")
+    console.log(countDown, 'From useEffect');
 
     gameContainer.initialize(countDown);
     //listener for player input
     document.onkeydown = function (e) {
       gameContainer.arrowKey(e);
     };
-  });
+  }, []);
 
-  const handlePause = () => {
+  function handlePause() {
     const pauseDisplay = document.getElementById('paused');
-    gameContainer.pauseMe(pauseDisplay)
+    gameContainer.pauseMe(pauseDisplay);
   }
   return (
     <div>
-      <img
-        id="pause"
-        src="resources/pause.svg"
-        onClick={handlePause}
-      ></img>
+      <img id="pause" src="resources/pause.svg" onClick={handlePause}></img>
       <img id="reset" src="resources/reset.svg"></img>
 
       <div id="gameBorder">
@@ -52,6 +47,6 @@ const App = () => {
       <div id="belly"></div>
     </div>
   );
-};
+}
 
 export default App;

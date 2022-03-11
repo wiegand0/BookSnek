@@ -85,11 +85,9 @@ const gameContainer = (function () {
       const para = document.createElement('div');
       if (till.getWormed()) {
         if (till.getHead()) {
-          para.setAttribute('id', 'tileHead');
-          para.setAttribute('class', 'rotate' + till.getOrient());
+          para.setAttribute('class', 'tileHead rotate' + till.getOrient());
         } else if (till.getTail()) {
-          para.setAttribute('id', 'tileTail');
-          para.setAttribute('class', 'rotate' + till.getOrient());
+          para.setAttribute('class', 'tileTail rotate' + till.getOrient());
         } else {
           para.setAttribute(
             'class',
