@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { HotUpdateChunk } from 'webpack';
 
 function GameContainer({}) {
   [running, setRunning] = useState(false);
