@@ -1,8 +1,6 @@
-import { useState } from 'react';
+import Board from '../Board/Board';
 
-function GameContainer({}) {
-  [running, setRunning] = useState(false);
-
+function GameContainer() {
   function initialize() {
     let runInterval = setInterval(gameLoop, 500);
   }
