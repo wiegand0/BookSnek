@@ -7,12 +7,16 @@ import Worm from '../Worm';
 
 function Board() {
   const board = useSelector(state => state.board);
+  const { resetGame } = useSelector(state => state.gameContainer);
   const dispatch = useDispatch();
   useEffect(() => dispatch(initialize()), []);
 
-  function update() {
-    dispatch(updateTile());
-  }
+  useEffect(() => {
+    if (resetGame === true) {
+      dispatch(destruct());
+      dispatch(initialize());
+    }
+  }, [resetGame]);
 
   return (
     <>

@@ -1,26 +1,28 @@
 // import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import {
+  toggleRunning,
+  toggleResetGame,
+} from './GameContainer/gameContainerSlice';
 import GameContainer from './GameContainer/GameContainer';
 
 function App() {
-  // useEffect(() => {
-  //   const countDown = document.getElementById('countdown');
-  //   console.log(countDown, 'From useEffect');
+  const dispatch = useDispatch();
+  const { running, collided } = useSelector(state => state.gameContainer);
 
-  //   gameContainer.initialize(countDown);
-  //   //listener for player input
-  //   document.onkeydown = function (e) {
-  //     gameContainer.arrowKey(e);
-  //   };
-  // }, []);
-
-  // function handlePause() {
-  //   const pauseDisplay = document.getElementById('paused');
-  //   gameContainer.pauseMe(pauseDisplay);
-  // }
   return (
     <div>
-      <img id="pause" src="resources/pause.svg"></img>
-      <img id="reset" src="resources/reset.svg"></img>
+      <img
+        id="pause"
+        src="resources/pause.svg"
+        onClick={collided ? null : () => dispatch(toggleRunning())}
+      ></img>
+      <img
+        id="reset"
+        src="resources/reset.svg"
+        onClick={() => dispatch(toggleResetGame())}
+      ></img>
 
       <div id="gameBorder">
         <div className="vert"></div>
@@ -41,8 +43,8 @@ function App() {
       <GameContainer></GameContainer>
 
       <p hidden id="countdown"></p>
-      <p id="paused" hidden>
-        PAUSED
+      <p id="paused" hidden={running}>
+        {collided ? 'Game Over...' : 'PAUSED'}
       </p>
       <div id="belly"></div>
     </div>

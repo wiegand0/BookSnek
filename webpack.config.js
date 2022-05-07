@@ -84,5 +84,5 @@ module.exports = {
     port: 8080,
   },
 
-  devtool: 'cheap-module-source-map',
+  devtool: 'source-map',
 };
