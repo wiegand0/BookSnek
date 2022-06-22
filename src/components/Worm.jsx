@@ -11,19 +11,19 @@ import { boardWidth, boardSize } from '../js/boardDimensions';
 function Worm({ head, tail, orientation, location }) {
   const dispatch = useDispatch();
   const board = useSelector(state => state.board);
+  // Holds all updates to board //
   const tempBoard = [...board];
-  const { moveSnake, collided, running } = useSelector(
+  const { moveSnake, collided, running, orient } = useSelector(
     state => state.gameContainer,
   );
 
-  // local variables used to update board //
-  let updatedOrient = orientation;
-
   // Add movement event listener //
   useEffect(() => {
-    window.addEventListener('keydown', changeDirection);
-    return () => window.removeEventListener('keydown', changeDirection);
-  }, []);
+    if (head) {
+      window.addEventListener('keydown', changeDirection);
+      return () => window.removeEventListener('keydown', changeDirection);
+    }
+  }, [head]);
 
   // Call move when moveSnake is updated //
   useEffect(() => {
@@ -70,9 +70,8 @@ function Worm({ head, tail, orientation, location }) {
     }
 
     //if going down add board width, opposite for going up
-    //0 is up, 1 is down, 2 is left, 3 is right
-
     //0: up, 1: right, 2: down, 3: left
+
     switch (tempOrientation) {
       case 0:
         if (location >= boardWidth - 1) tempLocation -= boardWidth;
@@ -115,8 +114,6 @@ function Worm({ head, tail, orientation, location }) {
       };
 
       const bodyOrient = [getHead().orientation, previousBody.orientation % 4];
-
-      console.log(getHead(), newBody, previousBody, bodyOrient);
 
       //8 cases of curved body
       //matching orientations documented in tile.js (line 8-11)
@@ -162,49 +159,38 @@ function Worm({ head, tail, orientation, location }) {
           // dispatch(setOrient({ tile: newBody, newOrient: 7 }));
           break;
       }
-      console.log(tempBoard[newBody.index]);
     }
   }
   function changeDirection(e) {
-    if (head && running) {
+    if (running) {
       //for prevention of doubling back on self
       const currentHead = getHead();
       let neck = adjustCoordinates(currentHead, false).newLocation;
-      console.log(
-        'Changed Direction' + ' neck: ' + neck + ' Direction: ' + e.key,
-      );
-      console.log(currentHead);
 
       //0: up, 1: right, 2: down, 3: left
       switch (e.key) {
         case 'ArrowUp':
           if (neck !== currentHead.index - boardWidth) {
-            console.log(updatedOrient);
-            tempBoard[currentHead.index] = { ...currentHead, orientation: 0 };
-            console.log(currentHead);
-            // dispatch(setOrient({ tile: currentHead, newOrient: 0 }));
+            // dispatch(updateOrient(0));
+            dispatch(setOrient({ tile: currentHead, newOrient: 0 }));
           }
           break;
         case 'ArrowDown':
           if (neck !== currentHead.index + boardWidth) {
-            console.log(updatedOrient);
-            tempBoard[currentHead.index] = { ...currentHead, orientation: 2 };
-            // dispatch(setOrient({ tile: currentHead, newOrient: 2 }));
+            // dispatch(updateOrient(2));
+            dispatch(setOrient({ tile: currentHead, newOrient: 2 }));
           }
           break;
         case 'ArrowLeft':
           if (neck !== currentHead.index - 1) {
-            console.log(updatedOrient);
-            tempBoard[currentHead.index] = { ...currentHead, orientation: 3 };
-            // dispatch(setOrient({ tile: currentHead, newOrient: 3 }));
+            // dispatch(updateOrient(3));
+            dispatch(setOrient({ tile: currentHead, newOrient: 3 }));
           }
           break;
         case 'ArrowRight':
-          console.log(neck, ++currentHead);
           if (neck !== currentHead.index + 1) {
-            console.log(updatedOrient);
-            tempBoard[currentHead.index] = { ...currentHead, orientation: 1 };
-            // dispatch(setOrient({ tile: currentHead, newOrient: 1 }));
+            // dispatch(updateOrient(1));
+            dispatch(setOrient({ tile: currentHead, newOrient: 1 }));
           }
           break;
       }
@@ -241,6 +227,8 @@ function Worm({ head, tail, orientation, location }) {
           isPlayer: true,
           orientation: oldHead.orientation,
         };
+
+        console.log(tempBoard[newHead.index]);
         if (snake.length > 2) {
           setOrientation();
         }
@@ -262,9 +250,9 @@ function Worm({ head, tail, orientation, location }) {
 
         // Copy properties from old tail to new tail, make sure index remains the same //
         tempBoard[newTail.index] = {
-          ...oldTail,
-          index: newTail.index,
-          orientation: newTail.orientation,
+          ...newTail,
+          head: false,
+          tail: true,
         };
         // End Movement //
         dispatch(updateBoard({ board: tempBoard }));
