@@ -5,15 +5,16 @@ import {
   setCollided,
   toggleMoveSnake,
 } from './GameContainer/gameContainerSlice';
-import { setOrient, updateBoard } from './Board/boardSlice';
+import { updateBoard } from './Board/boardSlice';
 import { boardWidth, boardSize } from '../js/boardDimensions';
 
-function Worm({ head, tail, orientation, location }) {
+function Worm({ head, tail, orientation }) {
   const dispatch = useDispatch();
   const board = useSelector(state => state.board);
   // Holds all updates to board //
   const tempBoard = [...board];
-  const { moveSnake, collided, running, orient } = useSelector(
+  const [newOrient, setNewOrient] = useState(null);
+  const { moveSnake, collided, running } = useSelector(
     state => state.gameContainer,
   );
 
@@ -55,15 +56,23 @@ function Worm({ head, tail, orientation, location }) {
     if (!forwards) {
       switch (tempOrientation) {
         case 0:
+        case 4:
+        case 8:
           tempOrientation = 2;
           break;
         case 1:
+        case 5:
+        case 9:
           tempOrientation = 3;
           break;
         case 2:
+        case 10:
+        case 6:
           tempOrientation = 0;
           break;
         case 3:
+        case 11:
+        case 7:
           tempOrientation = 1;
           break;
       }
@@ -74,43 +83,54 @@ function Worm({ head, tail, orientation, location }) {
 
     switch (tempOrientation) {
       case 0:
-        if (location >= boardWidth - 1) tempLocation -= boardWidth;
+      case 4:
+      case 8:
+        if (tempLocation >= boardWidth - 1) tempLocation -= boardWidth;
         else {
           //trigger game over
           return { newLocation: false };
         }
         break;
       case 1:
-        if (location % boardWidth != boardWidth - 1) tempLocation += 1;
+      case 5:
+      case 9:
+        if (tempLocation % boardWidth != boardWidth - 1) tempLocation += 1;
         else {
           //trigger game over
           return { newLocation: false };
         }
         break;
       case 2:
-        if (location < boardSize - boardWidth) tempLocation += boardWidth;
+      case 10:
+      case 6:
+        if (tempLocation < boardSize - boardWidth) tempLocation += boardWidth;
         else {
           //trigger game over
           return { newLocation: false };
         }
         break;
       case 3:
-        if (location % boardWidth != 0) tempLocation -= 1;
+      case 11:
+      case 7:
+        if (tempLocation % boardWidth != 0) tempLocation -= 1;
         else {
           //trigger game over
           return { newLocation: false };
         }
         break;
     }
-    return { newLocation: tempLocation, newOrientation: tempOrientation };
+    return { newLocation: tempLocation };
   }
   function setOrientation() {
     if (head) {
       const newBody = {
         ...tempBoard[adjustCoordinates(getHead(), false).newLocation],
       };
+      const oldBody = {
+        ...board[adjustCoordinates(getHead(), false).newLocation],
+      };
       const previousBody = {
-        ...tempBoard[adjustCoordinates(newBody, false).newLocation],
+        ...board[adjustCoordinates(oldBody, false).newLocation],
       };
 
       const bodyOrient = [getHead().orientation, previousBody.orientation % 4];
@@ -122,7 +142,6 @@ function Worm({ head, tail, orientation, location }) {
           //case[0,1], new body is countercw up
           if (bodyOrient[1] === 1)
             tempBoard[newBody.index] = { ...newBody, orientation: 8 };
-          // dispatch(setOrient({ tile: newBody, newOrient: 8 }));
           //case[0,3], new body is clockwise up
           if (bodyOrient[1] === 3)
             tempBoard[newBody.index] = { ...newBody, orientation: 4 };
@@ -132,31 +151,25 @@ function Worm({ head, tail, orientation, location }) {
           //case[1,2], new body is countercw right
           if (bodyOrient[1] === 2)
             tempBoard[newBody.index] = { ...newBody, orientation: 9 };
-          // dispatch(setOrient({ tile: newBody, newOrient: 9 }));
           //case[1,0], new body is clockwise right
           if (bodyOrient[1] === 0)
             tempBoard[newBody.index] = { ...newBody, orientation: 5 };
-          // dispatch(setOrient({ tile: newBody, newOrient: 5 }));
           break;
         case 2:
           //case[2,3], new body is countercw down
           if (bodyOrient[1] === 3)
-            tempBoard[newBody.index] = { ...newBody, orientation: 1 };
-          // dispatch(setOrient({ tile: newBody, newOrient: 1 }));
+            tempBoard[newBody.index] = { ...newBody, orientation: 10 };
           //case[2,1], new body is clcowkise down
           if (bodyOrient[1] === 1)
             tempBoard[newBody.index] = { ...newBody, orientation: 6 };
-          // dispatch(setOrient({ tile: newBody, newOrient: 6 }));
           break;
         case 3:
           //case[3,0], new body is countercw left
           if (bodyOrient[1] === 0)
-            tempBoard[newBody.index] = { ...newBody, orientation: 1 };
-          // dispatch(setOrient({ tile: newBody, newOrient: 1 }));
+            tempBoard[newBody.index] = { ...newBody, orientation: 11 };
           //case[3,2], new body is clockwise left
           if (bodyOrient[1] === 2)
             tempBoard[newBody.index] = { ...newBody, orientation: 7 };
-          // dispatch(setOrient({ tile: newBody, newOrient: 7 }));
           break;
       }
     }
@@ -171,26 +184,22 @@ function Worm({ head, tail, orientation, location }) {
       switch (e.key) {
         case 'ArrowUp':
           if (neck !== currentHead.index - boardWidth) {
-            // dispatch(updateOrient(0));
-            dispatch(setOrient({ tile: currentHead, newOrient: 0 }));
+            setNewOrient(0);
           }
           break;
         case 'ArrowDown':
           if (neck !== currentHead.index + boardWidth) {
-            // dispatch(updateOrient(2));
-            dispatch(setOrient({ tile: currentHead, newOrient: 2 }));
+            setNewOrient(2);
           }
           break;
         case 'ArrowLeft':
           if (neck !== currentHead.index - 1) {
-            // dispatch(updateOrient(3));
-            dispatch(setOrient({ tile: currentHead, newOrient: 3 }));
+            setNewOrient(3);
           }
           break;
         case 'ArrowRight':
           if (neck !== currentHead.index + 1) {
-            // dispatch(updateOrient(1));
-            dispatch(setOrient({ tile: currentHead, newOrient: 1 }));
+            setNewOrient(1);
           }
           break;
       }
@@ -202,8 +211,12 @@ function Worm({ head, tail, orientation, location }) {
     const snake = board.filter(tile => tile.isPlayer);
     // Only call move from head //
     if (head) {
+      const tempHead = {
+        ...getHead(),
+        orientation: newOrient !== null ? newOrient : getHead().orientation,
+      };
       // Find new head coordinates //
-      const newLocation = adjustCoordinates(getHead()).newLocation;
+      const newLocation = adjustCoordinates(tempHead).newLocation;
       if (newLocation === false) {
         return dispatch(setCollided());
       }
@@ -211,13 +224,13 @@ function Worm({ head, tail, orientation, location }) {
       const oldHead = getHead();
 
       if (newHead.content !== '') {
-        eating = true;
+        if (newHead.content !== '~') eating = true;
         eat(newHead.content);
       }
 
       if (!newHead.isPlayer) {
         // Set the old head to a regular player tile //
-        tempBoard[oldHead.index] = { ...oldHead, head: false };
+        tempBoard[oldHead.index] = { ...tempHead, head: false };
 
         // Add new head //
         tempBoard[newHead.index] = {
@@ -225,28 +238,26 @@ function Worm({ head, tail, orientation, location }) {
           content: '',
           head: true,
           isPlayer: true,
-          orientation: oldHead.orientation,
+          orientation: newOrient !== null ? newOrient : oldHead.orientation,
         };
-
-        console.log(tempBoard[newHead.index]);
-        if (snake.length > 2) {
-          setOrientation();
-        }
       } else {
-        dispatch(setCollided());
+        return dispatch(setCollided());
       }
 
-      // If snake is eating tail does not move, movement is complete //
-      if (eating) {
-        dispatch(updateBoard({ board: tempBoard }));
-        dispatch(toggleMoveSnake());
-      } else {
+      // If not eating tail moves //
+      if (!eating) {
         // Find the tail //
-        const oldTail = tempBoard.find(tile => tile.tail);
+        const oldTail = { ...tempBoard.find(tile => tile.tail) };
         // Find new tail location //
         const newTail = tempBoard[adjustCoordinates(oldTail).newLocation];
+
         // Remove the old tail //
-        tempBoard[oldTail.index] = { ...oldTail, isPlayer: false, tail: false };
+        tempBoard[oldTail.index] = {
+          ...oldTail,
+          isPlayer: false,
+          tail: false,
+          orientation: 1,
+        };
 
         // Copy properties from old tail to new tail, make sure index remains the same //
         tempBoard[newTail.index] = {
@@ -254,10 +265,15 @@ function Worm({ head, tail, orientation, location }) {
           head: false,
           tail: true,
         };
-        // End Movement //
-        dispatch(updateBoard({ board: tempBoard }));
-        dispatch(toggleMoveSnake());
       }
+
+      // Set Orientation if snake is longer than 2 //
+      if (snake.length > 2) {
+        setOrientation();
+      }
+      // End Movement //
+      dispatch(updateBoard({ board: tempBoard }));
+      dispatch(toggleMoveSnake());
     }
   }
 
