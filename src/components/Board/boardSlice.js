@@ -59,39 +59,6 @@ export const boardSlice = createSlice({
       }
     },
     updateBoard: (state, action) => action.payload.board,
-    // moveHead: (state, action) => {
-    //   // Destructure oldHead and newHead from payload //
-    //   const { oldHead, newHead } = action.payload;
-
-    //   // Set the old head to a regular player tile //
-    //   state[oldHead.index] = { ...oldHead, head: false };
-
-    //   // Add new head //
-    //   state[newHead.index] = {
-    //     ...newHead,
-    //     head: true,
-    //     isPlayer: true,
-    //     orientation: oldHead.orientation,
-    //   };
-    // },
-    // moveTail: (state, action) => {
-    //   // Destructure oldTail and newTail from payload //
-    //   const { oldTail, newTail } = action.payload;
-
-    //   // Remove the old tail //
-    //   state[oldTail.index] = { ...oldTail, isPlayer: false, tail: false };
-
-    //   // Copy properties from old tail to new tail, make sure index remains the same //
-    //   state[newTail.index] = {
-    //     ...oldTail,
-    //     index: newTail.index,
-    //     orientation: newTail.orientation,
-    //   };
-    // },
-    setOrient: (state, action) => {
-      const { tile, newOrient } = action.payload;
-      state[tile.index] = { ...tile, orientation: newOrient };
-    },
   },
 });
 

@@ -7,12 +7,14 @@ import {
 } from './GameContainer/gameContainerSlice';
 import { updateBoard } from './Board/boardSlice';
 import { boardWidth, boardSize } from '../js/boardDimensions';
+import { eatLetter } from './bellySlice';
 
 function Worm({ head, tail, orientation }) {
   const dispatch = useDispatch();
   const board = useSelector(state => state.board);
   // Holds all updates to board //
   const tempBoard = [...board];
+  // state to keep head from turning prior to moving
   const [newOrient, setNewOrient] = useState(null);
   const { moveSnake, collided, running } = useSelector(
     state => state.gameContainer,
@@ -47,32 +49,22 @@ function Worm({ head, tail, orientation }) {
     return className;
   }
 
-  function eat() {}
-
   function adjustCoordinates(tile, forwards = true) {
     let tempLocation = tile.index;
-    let tempOrientation = tile.orientation;
+    let tempOrientation = tile.orientation % 4;
     // Reverse orientation to find tiles behind //
     if (!forwards) {
       switch (tempOrientation) {
         case 0:
-        case 4:
-        case 8:
           tempOrientation = 2;
           break;
         case 1:
-        case 5:
-        case 9:
           tempOrientation = 3;
           break;
         case 2:
-        case 10:
-        case 6:
           tempOrientation = 0;
           break;
         case 3:
-        case 11:
-        case 7:
           tempOrientation = 1;
           break;
       }
@@ -83,8 +75,6 @@ function Worm({ head, tail, orientation }) {
 
     switch (tempOrientation) {
       case 0:
-      case 4:
-      case 8:
         if (tempLocation >= boardWidth - 1) tempLocation -= boardWidth;
         else {
           //trigger game over
@@ -92,8 +82,6 @@ function Worm({ head, tail, orientation }) {
         }
         break;
       case 1:
-      case 5:
-      case 9:
         if (tempLocation % boardWidth != boardWidth - 1) tempLocation += 1;
         else {
           //trigger game over
@@ -101,8 +89,6 @@ function Worm({ head, tail, orientation }) {
         }
         break;
       case 2:
-      case 10:
-      case 6:
         if (tempLocation < boardSize - boardWidth) tempLocation += boardWidth;
         else {
           //trigger game over
@@ -110,8 +96,6 @@ function Worm({ head, tail, orientation }) {
         }
         break;
       case 3:
-      case 11:
-      case 7:
         if (tempLocation % boardWidth != 0) tempLocation -= 1;
         else {
           //trigger game over
@@ -123,12 +107,15 @@ function Worm({ head, tail, orientation }) {
   }
   function setOrientation() {
     if (head) {
+      //head from last movement
       const newBody = {
         ...tempBoard[adjustCoordinates(getHead(), false).newLocation],
       };
+      //neck from last movement
       const oldBody = {
         ...board[adjustCoordinates(getHead(), false).newLocation],
       };
+      //piece behind the neck from last movement
       const previousBody = {
         ...board[adjustCoordinates(oldBody, false).newLocation],
       };
@@ -174,6 +161,7 @@ function Worm({ head, tail, orientation }) {
       }
     }
   }
+
   function changeDirection(e) {
     if (running) {
       //for prevention of doubling back on self
@@ -183,28 +171,29 @@ function Worm({ head, tail, orientation }) {
       //0: up, 1: right, 2: down, 3: left
       switch (e.key) {
         case 'ArrowUp':
-          if (neck !== currentHead.index - boardWidth) {
+          if (neck !== currentHead.index - boardWidth && newOrient !== 0) {
             setNewOrient(0);
           }
           break;
         case 'ArrowDown':
-          if (neck !== currentHead.index + boardWidth) {
+          if (neck !== currentHead.index + boardWidth && newOrient !== 2) {
             setNewOrient(2);
           }
           break;
         case 'ArrowLeft':
-          if (neck !== currentHead.index - 1) {
+          if (neck !== currentHead.index - 1 && newOrient !== 3) {
             setNewOrient(3);
           }
           break;
         case 'ArrowRight':
-          if (neck !== currentHead.index + 1) {
+          if (neck !== currentHead.index + 1 && newOrient !== 1) {
             setNewOrient(1);
           }
           break;
       }
     }
   }
+
   function move() {
     let eating = false;
 
@@ -225,7 +214,7 @@ function Worm({ head, tail, orientation }) {
 
       if (newHead.content !== '') {
         if (newHead.content !== '~') eating = true;
-        eat(newHead.content);
+        dispatch(eatLetter(newHead.content));
       }
 
       if (!newHead.isPlayer) {

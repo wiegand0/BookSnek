@@ -5,7 +5,6 @@ const initialState = {
   collided: false,
   resetGame: false,
   moveSnake: false,
-  headMoved: false,
 };
 
 const gameContainerSlice = createSlice({
@@ -30,9 +29,6 @@ const gameContainerSlice = createSlice({
     },
     toggleMoveSnake: state => {
       state.moveSnake = !state.moveSnake;
-    },
-    toggleHeadMoved: state => {
-      state.headMoved = !state.headMoved;
     },
   },
 });

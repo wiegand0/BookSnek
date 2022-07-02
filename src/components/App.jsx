@@ -13,7 +13,6 @@ function App() {
 
   useEffect(() => {
     function spaceBar(e) {
-      console.log(collided);
       if (e.key === ' ' && !collided) {
         dispatch(toggleRunning());
       }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Board from '../Board/Board';
+import Belly from '../Belly';
 import {
   startGame,
   toggleMoveSnake,
@@ -52,6 +53,7 @@ function GameContainer() {
   return (
     <div id="gameContainer">
       <Board />
+      <Belly />
     </div>
   );
 

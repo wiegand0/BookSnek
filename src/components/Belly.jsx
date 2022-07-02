@@ -1,29 +1,37 @@
-import { dictionaryAPI } from '../js/utilities';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { setBelly } from './bellySlice';
+import regeneratorRuntime from 'regenerator-runtime';
 
 //mouth prop receives letters to be added to the belly
-function Belly({ mouth, score }) {
-  [stomach, setStomach] = useState('');
+function Belly() {
+  const dispatch = useDispatch();
+  const stomach = useSelector(state => state.belly);
 
-  const destruct = () => setStomach('');
+  let tempBelly = `${stomach}`;
+
+  useEffect(() => {
+    update();
+  }, [stomach]);
 
   function update() {
-    if (mouth === '~') {
+    if (tempBelly.at(tempBelly.length - 1) === '~') {
+      tempBelly = tempBelly.replace('~', '');
       searchBelly();
       return;
     }
-
-    setStomach(stomach => (stomach += mouth));
   }
 
   //creates the array of all possible words
   async function searchBelly() {
     // Abort if stomach is empty or is 1 or less letters
-    if (stomach === '' || stomach.length <= 1) return;
+    if (tempBelly === '' || tempBelly.length <= 1) return removeWord('~');
 
     let wordsArr = [];
 
     //tempStomach to be searched
-    let tempStomach = stomach;
+    let tempStomach = tempBelly;
 
     //tempStomach tempStomach
     //find all possible contiguous subsets of stomach
@@ -53,7 +61,7 @@ function Belly({ mouth, score }) {
     }
 
     //If the belly has changed search again to check for other words
-    if (stomach !== tempStomach) searchBelly();
+    if (tempBelly !== tempStomach) searchBelly();
   }
 
   //calls the API, checks returned JSON to see if a word came back
@@ -69,10 +77,9 @@ function Belly({ mouth, score }) {
       jsonReturned[0].meanings[0].partOfSpeech === 'prefix' ||
       jsonReturned[0].meanings[0].partOfSpeech === 'suffix'
     ) {
-      console.log('Setting ' + theWord + ' False');
       valid = false;
+      removeWord('~');
     } else {
-      console.log('Setting ' + theWord + ' True');
       valid = true;
       removeWord(theWord);
       //use context to set the score for the gameboard
@@ -81,14 +88,25 @@ function Belly({ mouth, score }) {
     return valid;
   }
 
+  //API fetch
+  async function dictionaryAPI(theWord) {
+    const requestURL =
+      'https://api.dictionaryapi.dev/api/v2/entries/en/' + theWord;
+    const response = await fetch(requestURL);
+    return await response.json();
+  }
+
   //revoes words from the belly
   function removeWord(theWord) {
     //turn word into reg exp search
     const regex = new RegExp(theWord, 'i');
 
     //replace with empty string
-    setStomach(prevStomach => prevStomach.replace(regex, ''));
+    const newBelly = tempBelly.replace(regex, '');
+    dispatch(setBelly(newBelly));
   }
+
+  return <></>;
 }
 
 export default Belly;
