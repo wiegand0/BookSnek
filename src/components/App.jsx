@@ -1,4 +1,4 @@
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -10,6 +10,17 @@ import GameContainer from './GameContainer/GameContainer';
 function App() {
   const dispatch = useDispatch();
   const { running, collided } = useSelector(state => state.gameContainer);
+
+  useEffect(() => {
+    function spaceBar(e) {
+      console.log(collided);
+      if (e.key === ' ' && !collided) {
+        dispatch(toggleRunning());
+      }
+    }
+    window.addEventListener('keydown', spaceBar);
+    return () => window.removeEventListener('keydown', spaceBar);
+  }, [collided]);
 
   return (
     <div>
