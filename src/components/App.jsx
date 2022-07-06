@@ -42,9 +42,11 @@ function App() {
         <div className="vert2"></div>
         <div className="hor"></div>
         <div className="hor2"></div>
-        <div className="hor3">
+        <div className="hor4">
           <Belly />
         </div>
+        <div className="hor3"></div>
+        <div className="hor5"></div>
         <div className="topL"></div>
         <div className="topR"></div>
         <div className="botL"></div>
