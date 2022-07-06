@@ -2,12 +2,14 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setBelly } from './bellySlice';
+import { setFullBelly } from './GameContainer/gameContainerSlice';
 import regeneratorRuntime from 'regenerator-runtime';
 
 //mouth prop receives letters to be added to the belly
 function Belly() {
   const dispatch = useDispatch();
   const stomach = useSelector(state => state.belly);
+  const fullBelly = useSelector(state => state.gameContainer.fullBelly);
 
   let tempBelly = `${stomach}`;
 
@@ -15,7 +17,16 @@ function Belly() {
     update();
   }, [stomach]);
 
+  useEffect(() => {
+    if (fullBelly) {
+      dispatch(setBelly('YOU SUCK!!'));
+    }
+  }, [fullBelly]);
+
   function update() {
+    if (tempBelly.at(tempBelly.length - 1) !== '~' && tempBelly.length > 10) {
+      dispatch(setFullBelly());
+    }
     if (tempBelly.at(tempBelly.length - 1) === '~') {
       tempBelly = tempBelly.replace('~', '');
       searchBelly();
@@ -106,7 +117,13 @@ function Belly() {
     dispatch(setBelly(newBelly));
   }
 
-  return <></>;
+  return (
+    <div id="belly">
+      {stomach.split('').map((letter, index) => {
+        if (index < 10) return <p className="tileBelly">{letter}</p>;
+      })}
+    </div>
+  );
 }
 
 export default Belly;

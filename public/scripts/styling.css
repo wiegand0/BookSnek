@@ -3,13 +3,13 @@
 /*!!WORM STYLING!!*/
 
 .tileBody {
-  color: green;
   height: 1.3vw;
   width: 1.3vw;
 }
 
 .tileHead {
   background-image: url(../resources/snekHead.svg);
+  background-color: lightgray;
   height: 1.3vw;
   width: 1.3vw;
   overflow: visible;
@@ -17,6 +17,7 @@
 
 .tileTail {
   background-image: url(../resources/snekTail.svg);
+  background-color: lightgray;
   height: 1.3vw;
   width: 1.3vw;
 }
@@ -58,10 +59,8 @@
 
 #belly {
   width: auto;
-  top: 42.5vw;
-  left: 30vw;
+  background-color: pink;
   height: auto;
-  position: absolute;
   z-index: 2;
 }
 

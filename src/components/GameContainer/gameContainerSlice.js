@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   running: false,
   collided: false,
+  fullBelly: false,
   resetGame: false,
   moveSnake: false,
 };
@@ -24,11 +25,16 @@ const gameContainerSlice = createSlice({
       state.collided = true;
       state.running = false;
     },
-    resetCollided: state => {
+    resetGameState: state => {
       state.collided = false;
+      state.fullBelly = false;
     },
     toggleMoveSnake: state => {
       state.moveSnake = !state.moveSnake;
+    },
+    setFullBelly: state => {
+      state.fullBelly = true;
+      state.running = false;
     },
   },
 });
@@ -37,10 +43,9 @@ export default gameContainerSlice.reducer;
 export const {
   startGame,
   setCollided,
-  resetCollided,
+  resetGameState,
   toggleRunning,
   toggleResetGame,
   toggleMoveSnake,
-  toggleHeadMoved,
-  changeDirection,
+  setFullBelly,
 } = gameContainerSlice.actions;

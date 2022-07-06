@@ -6,10 +6,13 @@ import {
   toggleResetGame,
 } from './GameContainer/gameContainerSlice';
 import GameContainer from './GameContainer/GameContainer';
+import Belly from './Belly';
 
 function App() {
   const dispatch = useDispatch();
-  const { running, collided } = useSelector(state => state.gameContainer);
+  const { running, collided, fullBelly } = useSelector(
+    state => state.gameContainer,
+  );
 
   useEffect(() => {
     function spaceBar(e) {
@@ -39,7 +42,9 @@ function App() {
         <div className="vert2"></div>
         <div className="hor"></div>
         <div className="hor2"></div>
-        <div className="hor3"></div>
+        <div className="hor3">
+          <Belly />
+        </div>
         <div className="topL"></div>
         <div className="topR"></div>
         <div className="botL"></div>
@@ -54,7 +59,7 @@ function App() {
 
       <p hidden id="countdown"></p>
       <p id="paused" hidden={running}>
-        {collided ? 'Game Over...' : 'PAUSED'}
+        {collided || fullBelly ? 'Game Over...' : 'PAUSED'}
       </p>
       <div id="belly"></div>
     </div>

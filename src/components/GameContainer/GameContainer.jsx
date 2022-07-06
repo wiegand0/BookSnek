@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Board from '../Board/Board';
-import Belly from '../Belly';
 import {
   startGame,
   toggleMoveSnake,
   toggleResetGame,
-  resetCollided,
+  resetGameState,
 } from './gameContainerSlice';
+import { setBelly } from '../bellySlice';
 import { updateTile } from '../Board/boardSlice';
 
 function GameContainer() {
   const dispatch = useDispatch();
-  const { running, resetGame } = useSelector(state => state.gameContainer);
+  const { running, resetGame, fullBelly } = useSelector(
+    state => state.gameContainer,
+  );
   const [runInterval, setRunInterval] = useState(0);
   useEffect(() => {
     initialize();
@@ -38,7 +40,8 @@ function GameContainer() {
 
   function reset() {
     clearInterval(runInterval);
-    dispatch(resetCollided());
+    dispatch(resetGameState());
+    dispatch(setBelly(''));
     dispatch(toggleResetGame());
     initialize();
   }
@@ -53,11 +56,8 @@ function GameContainer() {
   return (
     <div id="gameContainer">
       <Board />
-      <Belly />
     </div>
   );
-
-  function setWord() {}
 }
 
 export default GameContainer;
