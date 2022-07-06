@@ -3,13 +3,13 @@
 /*!!WORM STYLING!!*/
 
 .tileBody {
-  color: green;
   height: 1.3vw;
   width: 1.3vw;
 }
 
 .tileHead {
   background-image: url(../resources/snekHead.svg);
+  background-color: lightgray;
   height: 1.3vw;
   width: 1.3vw;
   overflow: visible;
@@ -17,6 +17,7 @@
 
 .tileTail {
   background-image: url(../resources/snekTail.svg);
+  background-color: lightgray;
   height: 1.3vw;
   width: 1.3vw;
 }
@@ -57,12 +58,14 @@
 /*!!BELLY STYLING!!*/
 
 #belly {
-  width: auto;
-  top: 42.5vw;
-  left: 30vw;
+  width: 100%;
+  background-color: pink;
+  display: grid;
+  grid-template-rows: 1;
   height: auto;
-  position: absolute;
   z-index: 2;
+  grid-row-start: hor4;
+  grid-row-end: hor5;
 }
 
 .tileBelly {
@@ -115,7 +118,7 @@
     '... vert ... ... ... ... ... ... ... ... vert2 ...'
     '... tail ... ... ... ... ... ... ... ... vert2 ...'
     'botL hor2 hor2 hor2 hor2 hor2 hor2 hor2 hor2 hor2 botR head'
-    'botL2 hor3 hor3 hor3 hor3 hor3 hor3 hor3 hor3 hor3 hor3 botR2';
+    'botL2 hor4 hor3 hor3 hor3 hor3 hor3 hor3 hor3 hor3 hor5 botR2';
 }
 
 .head {
@@ -143,7 +146,17 @@
 
 .hor3 {
   grid-area: hor3;
-  background-image: url(../resources/snekStraight.svg);
+  background-image: url(../resources/bellyMid.svg);
+}
+
+.hor4 {
+  grid-area: hor4;
+  background-image: url(../resources/bellyLeft.svg);
+}
+
+.hor5 {
+  grid-area: hor5;
+  background-image: url(../resources/bellyRight.svg);
 }
 
 .topL {

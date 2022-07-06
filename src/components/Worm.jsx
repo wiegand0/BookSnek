@@ -43,7 +43,7 @@ function Worm({ head, tail, orientation }) {
     } else if (tail) {
       className += 'Tail ';
     } else {
-      className += ` o${orientation}`;
+      className += `Body o${orientation}`;
     }
     className += ` rotate${orientation % 4}`;
     return className;
